@@ -1,8 +1,12 @@
+import ClassDetailsPage from "./pages/ClassDetails";
+import HomePage from "./pages/Home";
+
 function App() {
   return (
-    <div className="App">
-      <h1>EduSource Frontend</h1>
-    </div>
+    <>
+    <ClassDetailsPage />
+
+    </>
   );
 }
 
