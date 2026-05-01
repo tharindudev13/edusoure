@@ -1,28 +1,44 @@
-import  { useState } from 'react';
-import { BookOpen, Users, GraduationCap, FileText, PlusCircle, LogOut, LogIn } from 'lucide-react';
+import  { useEffect, useState } from 'react';
+import { BookOpen, Users, GraduationCap, FileText, PlusCircle} from 'lucide-react';
 import ClassCard from '../components/ClassCard'; // Assuming ClassCard is in the same directory
-import NavBar from '../components/Navbar';
 
 const HomePage = () => {
   // Demo State: Swap this with your JWT/Auth context later
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
-  const [userName, setUserName] = useState("Saman");
   const [fileName,setFileName] = useState("");
   const [fileType,setFileType] = useState("Notes")
+  const [counts,setCounts] = useState({})
+
+  useEffect(() =>{
+    const fetchCounts = async ()=>{
+      try{
+        const response = await fetch("http://localhost:8080/api/v1/users/count")
+        
+        if(response.ok){
+        const  result = await response.json()
+        setCounts(result)
+        }
+      }catch(error){
+        console.log(error);
+        
+      } 
+    }
+    fetchCounts()
+  },[])
+
+  
 
   // Stat Data
   const stats = [
-    { label: "Total Classes", count: "128", icon: <BookOpen className="text-blue-600" /> },
-    { label: "Active Students", count: "1,450", icon: <Users className="text-blue-600" /> },
-    { label: "Expert Teachers", count: "45", icon: <GraduationCap className="text-blue-600" /> },
-    { label: "Study Materials", count: "890", icon: <FileText className="text-blue-600" /> }
+    { label: "Total Classes", count: counts[2], icon: <BookOpen className="text-blue-600" /> },
+    { label: "Active Students", count: counts[3], icon: <Users className="text-blue-600" /> },
+    { label: "Expert Teachers", count: counts[0], icon: <GraduationCap className="text-blue-600" /> },
+    { label: "Study Materials", count: counts[1], icon: <FileText className="text-blue-600" /> }
   ];
 
   return (
     <div className="min-h-screen bg-slate-50">
       
-      {/* --- NAVBAR --- */}
-    <NavBar isLoggedIn={isLoggedIn} userName={userName} />    
+        
 
       <main className="max-w-7xl mx-auto px-4 py-10 space-y-16">
         

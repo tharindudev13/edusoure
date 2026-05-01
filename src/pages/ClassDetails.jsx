@@ -1,7 +1,6 @@
 import  { useState } from 'react';
 import { Star,  User, MessageCircle, Send, ImageIcon } from 'lucide-react';
 import Review from '../components/Review';
-import NavBar from '../components/Navbar';
 
 const ClassDetailsPage = () => {
   // Example State for the new review input
@@ -10,7 +9,6 @@ const ClassDetailsPage = () => {
 
   return (
     <>
-    <NavBar isLoggedIn={isLoggedIn} userName={userName} />    
     
 
     <div className="min-h-screen bg-slate-50 pb-12">
