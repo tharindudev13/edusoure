@@ -1,11 +1,54 @@
-import  { useState } from 'react';
+import  { useEffect, useState } from 'react';
 import { Star,  User, MessageCircle, Send, ImageIcon } from 'lucide-react';
 import Review from '../components/Review';
+import Loading from '../components/Loading';
+import { useSelector } from 'react-redux';
+import { useParams } from 'react-router';
 
 const ClassDetailsPage = () => {
   // Example State for the new review input
   const [reviewText, setReviewText] = useState("");
   const [rating, setRating] = useState(0);
+  const token = localStorage.getItem('token')
+  const [loading,setLoading] = useState(true)
+  const [details,setDetails] = useState({})
+  const {id} = useParams()
+
+  const{user} = useSelector((state) => state.auth)
+
+  const isStudent = user?.roles?.includes("ROLE_STUDENT");
+
+
+  useEffect(() =>{
+    const fetchClassDetails = async() => {
+      try{
+        const response = await fetch(`http://localhost:8080/api/v1/class/getclass/${id}`,{
+          method: "GET",
+          headers: {
+            "Authorization" : `Bearer ${token}`
+          }
+        })
+        if(response.ok){
+          const result = await response.json()
+          setDetails(result)
+        }
+      }catch(error){
+        console.log(error);
+      }finally{
+        setLoading(false)
+      }
+    }
+    fetchClassDetails()
+  },[])
+
+  // console.log(details);
+  
+
+  if(loading){
+    return(
+      <Loading />
+    )
+  }
 
   return (
     <>
@@ -19,8 +62,8 @@ const ClassDetailsPage = () => {
           <div className="md:w-1/2 mb-6 md:mb-0">
             <div className="aspect-video rounded-2xl overflow-hidden shadow-lg border border-slate-100">
               <img 
-                src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3" 
-                alt="Main Class" 
+                src={details.thumbnail} 
+                alt={`${details.subject} By ${details.teacher.name}`} 
                 className="w-full h-full object-cover"
               />
             </div>
@@ -30,22 +73,22 @@ const ClassDetailsPage = () => {
           <div className="md:w-1/2 flex flex-col justify-center">
             <div className="flex items-center gap-2 mb-2">
               <span className="bg-blue-100 text-blue-700 text-xs font-bold px-3 py-1 rounded-full uppercase">
-                Academic Year 2026
+                {details.year}
               </span>
             </div>
             <h1 className="text-4xl font-extrabold text-slate-900 mb-4 leading-tight">
-              Advanced Machine Learning: Neural Networks & NLP
+              {details.subject}
             </h1>
             
             <div className="flex flex-wrap items-center gap-6 text-slate-600 mb-6">
               <div className="flex items-center gap-2">
                 <User className="w-5 h-5 text-blue-500" />
-                <span className="font-medium text-slate-800">Dr. Aruni Bandara</span>
+                <span className="font-medium text-slate-800">{details.teacher.name}</span>
               </div>
               <div className="flex items-center gap-1">
                 <Star className="w-5 h-5 fill-yellow-400 text-yellow-400" />
-                <span className="font-bold text-slate-800">4.8</span>
-                <span className="text-sm text-slate-400">(124 Reviews)</span>
+                <span className="font-bold text-slate-800">{details.avgRating}</span>
+                <span className="text-sm text-slate-400">({details.reviews.length})</span>
               </div>
             </div>
 
@@ -69,10 +112,10 @@ const ClassDetailsPage = () => {
               Class Gallery
             </h3>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {[1, 2, 3, 4].map((img) => (
-                <div key={img} className="aspect-square rounded-xl overflow-hidden border-2 border-white shadow-sm hover:scale-105 transition-transform duration-300">
+              {details.images.map((img,index) => (
+                <div key={index} className="aspect-square rounded-xl overflow-hidden border-2 border-white shadow-sm hover:scale-105 transition-transform duration-300">
                   <img 
-                    src={`https://picsum.photos/seed/${img+20}/400`} 
+                    src={img} 
                     className="w-full h-full object-cover" 
                     alt="Gallery"
                   />
@@ -90,10 +133,19 @@ const ClassDetailsPage = () => {
             
             <div className="space-y-6 mb-10">
               {/* Review Item */}
-              <Review />
+              {details.reviews.map((rev,index) => (
+                <Review 
+                  key={index}
+                  name={rev.student_name}
+                  rating={rev.rating}
+                  comment={rev.text}
+                  profilePic={rev.student_pic}
+                />
+              ))}
             </div>
 
             {/* 4. Submit Review Section */}
+            {isStudent && (
             <div className="bg-blue-600 rounded-2xl p-8 text-white shadow-xl">
               <h4 className="text-xl font-bold mb-4">Write a Review</h4>
               <div className="space-y-4">
@@ -120,6 +172,7 @@ const ClassDetailsPage = () => {
                 </button>
               </div>
             </div>
+            )}
           </section>
         </div>
 
@@ -130,16 +183,19 @@ const ClassDetailsPage = () => {
             <div className="space-y-4">
               <div className="flex justify-between text-sm">
                 <span className="text-slate-500">Subject</span>
-                <span className="font-semibold text-slate-800">Machine Learning</span>
+                <span className="font-semibold text-slate-800">{details.subject}</span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-slate-500">Format</span>
-                <span className="font-semibold text-slate-800">Video & PDF</span>
+                <span className="text-slate-500">Mode</span>
+                <span className="font-semibold text-slate-800">{details.mode}</span>
               </div>
-              <div className="flex justify-between text-sm">
-                <span className="text-slate-500">Access</span>
-                <span className="font-semibold text-slate-800 text-green-600">Lifetime</span>
-              </div>
+              {details.duration && (
+                <div className="flex justify-between text-sm">
+                  <span className="text-slate-500">Duration</span>
+                  <span className="font-semibold text-slate-800">{details.duration}</span>
+                </div>
+              )}
+              
             </div>
             <button className="w-full mt-6 py-4 bg-blue-600 text-white font-bold rounded-xl shadow-lg hover:bg-blue-700 transition-all">
               Enroll Now

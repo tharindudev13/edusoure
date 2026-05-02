@@ -22,6 +22,7 @@ const NavBar = () => {
 
           {/* Nav Links */}
           <div className="hidden md:flex items-center gap-8 text-sm font-bold text-slate-600 uppercase tracking-wide">
+            <NavLink to="/" className="hover:text-blue-600 transition-colors">Home</NavLink>
             <NavLink to="/classes" className="hover:text-blue-600 transition-colors">Classes</NavLink>
             <NavLink to="/materials" className="hover:text-blue-600 transition-colors">Study Materials</NavLink>
             <NavLink to={`/profile/${user.id}`} className="hover:text-blue-600 transition-colors">Profile</NavLink>

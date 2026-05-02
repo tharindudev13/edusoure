@@ -1,6 +1,7 @@
 import  { useEffect, useState } from 'react';
 import { BookOpen, Users, GraduationCap, FileText, PlusCircle} from 'lucide-react';
 import ClassCard from '../components/ClassCard'; // Assuming ClassCard is in the same directory
+import TopRatedClasses from '../components/TopRatedClasses';
 
 const HomePage = () => {
   // Demo State: Swap this with your JWT/Auth context later
@@ -98,23 +99,7 @@ const HomePage = () => {
 </section>
 
         {/* --- TOP RATED CLASSES --- */}
-        <section>
-          <div className="flex justify-between items-end mb-8">
-            <h3 className="text-2xl font-black text-slate-800">Top Rated Classes</h3>
-            <a href="#" className="text-blue-600 font-bold text-sm hover:underline">View All</a>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[1, 2, 3, 4, 5, 6].map((item) => (
-              <ClassCard key={item} 
-                subject="Machine Learning Core" 
-                teacherName="Dr. Aruni Bandara" 
-                avgRating={4.9} 
-                year="2026" 
-                numReviews={88} 
-              />
-            ))}
-          </div>
-        </section>
+        <TopRatedClasses />
 
         {/* --- RECENT MATERIALS --- */}
         <section>

@@ -1,4 +1,7 @@
 import { Star,  BookOpen } from 'lucide-react'; // Using lucide-react for professional icons
+import { useNavigate } from 'react-router';
+
+
 
 const ClassCard = ({ 
   thumbnail, 
@@ -6,8 +9,12 @@ const ClassCard = ({
   avgRating, 
   teacherName, 
   year, 
-  numReviews 
+  numReviews,
+  id 
 }) => {
+
+  const navigate = useNavigate()
+
   return (
     <div className="max-w-sm bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden">
       {/* Thumbnail: Aspect Ratio 16:9 (YouTube Standard) */}
@@ -57,7 +64,7 @@ const ClassCard = ({
 
       {/* Action Button */}
       <div className="px-4 pb-4">
-        <button className="w-full py-2 bg-blue-50 hover:bg-blue-100 text-blue-600 font-semibold rounded-lg text-sm transition-colors border border-blue-100">
+        <button onClick={() => navigate(`/class/${id}`)}  className="cursor-pointer w-full py-2 bg-blue-50 hover:bg-blue-100 text-blue-600 font-semibold rounded-lg text-sm transition-colors border border-blue-100">
           View Details
         </button>
       </div>
