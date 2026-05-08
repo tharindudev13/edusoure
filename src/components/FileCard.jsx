@@ -1,19 +1,24 @@
 import { Download, User, Calendar, } from 'lucide-react';
+import { Link } from 'react-router';
 
 const MaterialCard = ({ 
   previewUrl, 
   fileName, 
   author, 
   subject, 
-  uploadedDate 
+  type 
 }) => {
+
+  
+  const isPDF = previewUrl?.toLowerCase().includes(".pdf")
+
   return (
     <div className="max-w-sm bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden flex flex-col">
       
       {/* Thumbnail: Exact same 16:9 ratio as ClassCard */}
       <div className="relative aspect-video w-full bg-slate-100 overflow-hidden">
         <img 
-          src={previewUrl || "/api/placeholder/400/225"} 
+          src={isPDF ? "https://cdn-icons-png.flaticon.com/512/337/337946.png" : previewUrl} 
           alt={fileName} 
           className="w-full h-full object-cover"
         />
@@ -41,14 +46,16 @@ const MaterialCard = ({
         {/* Date Row */}
         <div className="flex items-center gap-2 text-slate-500 mb-4">
           <Calendar className="w-4 h-4" />
-          <span className="text-xs">{uploadedDate}</span>
+          <span className="text-xs">{type}</span>
         </div>
 
         {/* Action Button */}
-        <button className="w-full py-2 bg-blue-50 hover:bg-blue-100 text-blue-600 font-semibold rounded-lg text-sm transition-colors border border-blue-100 flex items-center justify-center gap-2">
+        <Link to={previewUrl} target='_blank'>
+        <button className="w-full py-2 bg-blue-50 hover:bg-blue-100 text-blue-600 font-semibold rounded-lg text-sm transition-colors border border-blue-100 flex items-center justify-center gap-2 cursor-pointer">
           <Download size={16} />
           Download PDF
         </button>
+        </Link>
       </div>
     </div>
   );

@@ -6,6 +6,7 @@ import { useParams } from 'react-router';
 import Loading from '../components/Loading';
 import Subjects from '../components/Subjects';
 import TeacherRating from '../components/TeacherRating';
+import RequestClassNav from '../components/Req';
 
 const ProfilePage = () => {
   const { user } = useSelector((state) => state.auth);
@@ -28,7 +29,11 @@ const ProfilePage = () => {
           if(response.ok){
           const  result = await response.json()
           setUserDetails(result)
-          
+          }
+          if(response.status === 403){
+            window.alert("Session expired. Please log in again.")
+            localStorage.removeItem('token')
+            window.location.href = '/login'
           }
         }catch(error){
           console.log(error);
@@ -52,7 +57,7 @@ const ProfilePage = () => {
 
   if (loading) {
     return (
-        <Loading />
+        <Loading messege={"Loading Profile..."}/>
     );
     }
 
@@ -123,6 +128,9 @@ const ProfilePage = () => {
         {isTeacher && (
             <TeacherRating id={id}/>
         )}
+
+        {isTeacher && <RequestClassNav />}
+
 
         {/* Conditional Teacher Classes Section */}
         {isTeacher && (

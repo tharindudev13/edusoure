@@ -32,6 +32,11 @@ const ClassDetailsPage = () => {
           const result = await response.json()
           setDetails(result)
         }
+        if(response.status === 403){
+            window.alert("Session expired. Please log in again.")
+            localStorage.removeItem('token')
+            window.location.href = '/login'
+          }
       }catch(error){
         console.log(error);
       }finally{
@@ -41,12 +46,12 @@ const ClassDetailsPage = () => {
     fetchClassDetails()
   },[])
 
-  // console.log(details);
+  console.log(details);
   
 
   if(loading){
     return(
-      <Loading />
+      <Loading messege={"Loading Class Details..."}/>
     )
   }
 

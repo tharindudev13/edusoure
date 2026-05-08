@@ -42,7 +42,8 @@ const authSlice = createSlice({
                 const userData = {
                     email: action.payload.email,
                     id: action.payload.id,
-                    roles: action.payload.roles
+                    roles: action.payload.roles,
+                    name: action.payload.name
             }
             state.user = userData
 

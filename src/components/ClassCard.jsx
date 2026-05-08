@@ -64,7 +64,7 @@ const ClassCard = ({
 
       {/* Action Button */}
       <div className="px-4 pb-4">
-        <button onClick={() => navigate(`/class/${id}`)}  className="cursor-pointer w-full py-2 bg-blue-50 hover:bg-blue-100 text-blue-600 font-semibold rounded-lg text-sm transition-colors border border-blue-100">
+        <button onClick={() => navigate(`/class/${teacherName}/${id}`)}  className="cursor-pointer w-full py-2 bg-blue-50 hover:bg-blue-100 text-blue-600 font-semibold rounded-lg text-sm transition-colors border border-blue-100">
           View Details
         </button>
       </div>

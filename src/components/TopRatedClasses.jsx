@@ -30,6 +30,9 @@ const TopRatedClasses = () => {
             <h3 className="text-2xl font-black text-slate-800">Top Rated Classes</h3>
             <Link to={'/classes'} className="text-blue-600 font-bold text-sm hover:underline">View All</Link>
           </div>
+          {topClasses.length === 0 && (
+            <p className="text-gray-500 text-center py-16">No classes found!. Try checking your connection.....</p>
+          ) }
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {topClasses.map((item) => (
               <ClassCard key={item.id} 
