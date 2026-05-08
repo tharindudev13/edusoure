@@ -81,7 +81,7 @@ const RequestClassForm = () => {
             subject: subject,
             year: year,
             tc_name: teacherName,
-            tc_id: tc_id,
+            tcId: tc_id,
             mode: mode,
             duration: duration,
             lms: lms,

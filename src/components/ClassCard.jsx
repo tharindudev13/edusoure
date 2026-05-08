@@ -10,7 +10,8 @@ const ClassCard = ({
   teacherName, 
   year, 
   numReviews,
-  id 
+  id,
+  status 
 }) => {
 
   const navigate = useNavigate()
@@ -31,10 +32,21 @@ const ClassCard = ({
 
       {/* Content Section */}
       <div className="p-4">
+        <div className="flex justify-between items-start gap-2 mb-1">
         {/* Subject Title */}
-        <h3 className="text-lg font-bold text-slate-800 truncate mb-1">
-          {subject}
-        </h3>
+          <h3 className="text-lg font-bold text-slate-800 truncate flex-1">
+            {subject}
+          </h3>
+    
+      {/* Status Badge */}
+      <span className={`px-2 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider border shadow-sm ${
+        status === 'Approved'.toUpperCase() ? 'bg-emerald-50 text-emerald-600 border-emerald-100' :
+        status === 'Pending'.toUpperCase() ? 'bg-amber-50 text-amber-600 border-amber-100' :
+        'bg-rose-50 text-rose-600 border-rose-100'
+      }`}>
+        {status}
+      </span>
+      </div>
 
         {/* Teacher Name */}
         <div className="flex items-center text-slate-600 mb-3">

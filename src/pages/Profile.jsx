@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { User, Phone, MapPin,  FileText, Layout, Contact, Video, School } from 'lucide-react';
+import { User, Phone, MapPin,  FileText,  Contact, Video, School } from 'lucide-react';
 import MaterialCard from '../components/FileCard'; // Using the card we built earlier
 import {  useEffect, useState } from 'react';
 import { useParams } from 'react-router';
@@ -7,6 +7,7 @@ import Loading from '../components/Loading';
 import Subjects from '../components/Subjects';
 import TeacherRating from '../components/TeacherRating';
 import RequestClassNav from '../components/Req';
+import MyClasses from '../components/MyClasses';
 
 const ProfilePage = () => {
   const { user } = useSelector((state) => state.auth);
@@ -45,13 +46,6 @@ const ProfilePage = () => {
       
     },[])
     
-
-    console.log(userDetails);
-    
-    
-  
-
-  
 
   const isTeacher = user?.roles?.includes("ROLE_TEACHER");
 
@@ -134,18 +128,7 @@ const ProfilePage = () => {
 
         {/* Conditional Teacher Classes Section */}
         {isTeacher && (
-          <section>
-            <h3 className="text-xl font-black text-slate-800 mb-6 flex items-center gap-2">
-              <Layout size={22} className="text-blue-600" /> Active Classes
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {profileData.classes.map((cls, i) => (
-                <div key={i} className="bg-blue-600 p-6 rounded-2xl text-white font-bold shadow-lg shadow-blue-100">
-                  {cls}
-                </div>
-              ))}
-            </div>
-          </section>
+            <MyClasses />
         )}
 
         {/* Uploaded Materials Section */}
