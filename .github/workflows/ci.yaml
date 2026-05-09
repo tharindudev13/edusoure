@@ -15,9 +15,9 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v4 # Note: 'actions/setup-node' is the standard repo
         with:
-          node-version: 18
+          node-version: 22  # Update this to 22
           cache: 'npm'
 
       - name: Install dependencies
