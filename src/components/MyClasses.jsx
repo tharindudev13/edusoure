@@ -11,7 +11,7 @@ const MyClasses = () => {
     useEffect(() => {
         const fetchMyClasses = async () =>{
             try{
-                const response = await fetch(`http://localhost:8080/api/v1/class/classes-by-teacher/${user.id}`, {
+                const response = await fetch(`http://34.21.152.245:8080/api/v1/class/classes-by-teacher/${user.id}`, {
                     headers: {
                         "Authorization": `Bearer ${token}`
                     }
@@ -29,10 +29,10 @@ const MyClasses = () => {
         fetchMyClasses()
     },[])
 
-    console.log(myClasses);
+
 
     const groupedClasses = myClasses.reduce((acc, currentClass) => {
-        const status = currentClass.status.toCapitalized() || 'Other';
+        const status = currentClass.status.toLowerCase() || 'Other';
         if (!acc[status]) {
             acc[status] = [];
         }
@@ -55,7 +55,16 @@ const MyClasses = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                     {items.map((cls) => (
-                    <ClassCard key={cls.id} {...cls} />
+                    <ClassCard key={cls.id} 
+                        thumbnail={cls.thumbnail}
+                                    year={cls.year}
+                                    teacherName={cls.teacher.name}
+                                    numReviews={cls.reviews? cls.reviews.length : 0}
+                                    avgRating={cls.avgRating}
+                                    id={cls.id}
+                                    subject={cls.subject}
+                                    status={cls.status} 
+                                    />
                     ))}
                 </div>
                 </div>

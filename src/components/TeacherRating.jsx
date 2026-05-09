@@ -8,7 +8,7 @@ const TeacherRating = ({id}) => {
     useEffect(() => {
         const fetchRatings = async(id) => {
             try{
-                const response = await fetch(`http://localhost:8080/api/v1/teachers/getratings/${id}`,{
+                const response = await fetch(`http://34.21.152.245:8080/api/v1/teachers/getratings/${id}`,{
                     method : "GET",
                     headers:{
                         "Authorization" : `Bearer ${token}`

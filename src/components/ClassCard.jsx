@@ -39,13 +39,15 @@ const ClassCard = ({
           </h3>
     
       {/* Status Badge */}
-      <span className={`px-2 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider border shadow-sm ${
-        status === 'Approved'.toUpperCase() ? 'bg-emerald-50 text-emerald-600 border-emerald-100' :
-        status === 'Pending'.toUpperCase() ? 'bg-amber-50 text-amber-600 border-amber-100' :
-        'bg-rose-50 text-rose-600 border-rose-100'
-      }`}>
+      {status && (
+        <span className={`px-2 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider border shadow-sm ${
+          status === 'Approved'.toUpperCase() ? 'bg-emerald-50 text-emerald-600 border-emerald-100' :
+          status === 'Pending'.toUpperCase() ? 'bg-amber-50 text-amber-600 border-amber-100' :
+          'bg-rose-50 text-rose-600 border-rose-100'
+        }`}>
         {status}
       </span>
+      )}
       </div>
 
         {/* Teacher Name */}

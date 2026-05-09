@@ -10,7 +10,7 @@ const HomePage = () => {
   useEffect(() =>{
     const fetchCounts = async ()=>{
       try{
-        const response = await fetch("http://localhost:8080/api/v1/users/count")
+        const response = await fetch("http://34.21.152.245:8080/api/v1/users/count")
         
         if(response.ok){
         const  result = await response.json()

@@ -56,7 +56,7 @@ const RequestClassForm = () => {
     useEffect(() => {
         const fetchTc_id = async (id) =>{
             try{
-                const response = await fetch(`http://localhost:8080/api/v1/teachers/id/${id}`,{
+                const response = await fetch(`http://34.21.152.245:8080/api/v1/teachers/id/${id}`,{
                     method: "GET",
                     headers: {
                         "Authorization" : `Bearer ${token}`
@@ -86,7 +86,8 @@ const RequestClassForm = () => {
             duration: duration,
             lms: lms,
             locations: locations.split(',').map(l => l.trim()),
-            hotline: hotline
+            hotline: hotline,
+            desc: desc
         }
 
         formData.append('data', new Blob([JSON.stringify(classData)], {type: 'application/json'}));
@@ -100,7 +101,7 @@ const RequestClassForm = () => {
 
         try{
             setLoading(true)
-            const response = await fetch('http://localhost:8080/api/v1/class/req',{
+            const response = await fetch('http://34.21.152.245:8080/api/v1/class/req',{
                 method: "POST",
                 headers: {"Authorization" : `Bearer ${token}`},
                 body: formData

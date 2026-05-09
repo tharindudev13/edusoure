@@ -9,7 +9,7 @@ const TopRatedClasses = () => {
     useEffect(() => {
         const fetchTopClasses = async () =>{
             try{
-                const response = await fetch("http://localhost:8080/api/v1/class/top-rated")
+                const response = await fetch("http://34.21.152.245:8080/api/v1/class/top-rated")
                 if(response.ok){
                     const result = await response.json()
                     setTopClasses(result)

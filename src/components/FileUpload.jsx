@@ -45,7 +45,7 @@ const FileUpload = () => {
 
         try{
             setLoading(true)
-            const response = await fetch("http://localhost:8080/api/v1/material/upload",{
+            const response = await fetch("http://34.21.152.245:8080/api/v1/material/upload",{
                 method: "POST",
                 headers: {
                     "Authorization" : `Bearer ${token}`

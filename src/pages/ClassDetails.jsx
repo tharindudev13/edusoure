@@ -1,9 +1,10 @@
 import  { useEffect, useState } from 'react';
-import { Star,  User, MessageCircle, Send, ImageIcon } from 'lucide-react';
+import { Star, MessageCircle, Send, ImageIcon } from 'lucide-react';
 import Review from '../components/Review';
 import Loading from '../components/Loading';
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router';
+import { useParams} from 'react-router';
+import Teacher from '../components/Teacher';
 
 const ClassDetailsPage = () => {
   // Example State for the new review input
@@ -18,11 +19,13 @@ const ClassDetailsPage = () => {
 
   const isStudent = user?.roles?.includes("ROLE_STUDENT");
 
+  
+
 
   useEffect(() =>{
     const fetchClassDetails = async() => {
       try{
-        const response = await fetch(`http://localhost:8080/api/v1/class/getclass/${id}`,{
+        const response = await fetch(`http://34.21.152.245:8080/api/v1/class/getclass/${id}`,{
           method: "GET",
           headers: {
             "Authorization" : `Bearer ${token}`
@@ -31,6 +34,8 @@ const ClassDetailsPage = () => {
         if(response.ok){
           const result = await response.json()
           setDetails(result)
+          
+          
         }
         if(response.status === 403){
             window.alert("Session expired. Please log in again.")
@@ -46,7 +51,11 @@ const ClassDetailsPage = () => {
     fetchClassDetails()
   },[])
 
+  
+
+
   console.log(details);
+
   
 
   if(loading){
@@ -86,14 +95,11 @@ const ClassDetailsPage = () => {
             </h1>
             
             <div className="flex flex-wrap items-center gap-6 text-slate-600 mb-6">
-              <div className="flex items-center gap-2">
-                <User className="w-5 h-5 text-blue-500" />
-                <span className="font-medium text-slate-800">{details.teacher.name}</span>
-              </div>
+              <Teacher name={details.teacher.name} id={details.teacher.tcId}/>
               <div className="flex items-center gap-1">
                 <Star className="w-5 h-5 fill-yellow-400 text-yellow-400" />
                 <span className="font-bold text-slate-800">{details.avgRating}</span>
-                <span className="text-sm text-slate-400">({details.reviews.length})</span>
+                <span className="text-sm text-slate-400">({details.reviews? details.reviews.length : 0})</span>
               </div>
             </div>
 

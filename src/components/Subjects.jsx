@@ -5,13 +5,12 @@ const Subjects = ({id,isTeacher}) => {
 
     const token = localStorage.getItem('token')
     const [subjects,setSubjects] = useState([])
-    const [loading,setLoading] = useState(true)
     useEffect(() =>{
         const fetchSubjects = async (id)=>{
             
         const targetType = isTeacher ? 'teachers' : 'students';
           try{
-            const response = await fetch(`http://localhost:8080/api/v1/${targetType}/subjects/${id}`,{
+            const response = await fetch(`http://34.21.152.245:8080/api/v1/${targetType}/subjects/${id}`,{
               method: 'GET',
               headers: {
                   'Authorization': `Bearer ${token}` 
@@ -24,8 +23,6 @@ const Subjects = ({id,isTeacher}) => {
             
           }catch(error){
             console.log(error);
-          }finally{
-            setLoading(false)
           }
         }
         fetchSubjects(id)

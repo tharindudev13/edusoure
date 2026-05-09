@@ -10,7 +10,7 @@ const RecentMaterials = () => {
         const fetchRecentmaterials = async() => {
 
             try{
-                const response = await fetch('http://localhost:8080/api/v1/material/recents',{
+                const response = await fetch('http://34.21.152.245:8080/api/v1/material/recents',{
                 method: "GET",
                 headers:{
                     "Authorization" : `Bearer ${token}`
