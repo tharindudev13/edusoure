@@ -46,6 +46,7 @@ const ProfilePage = () => {
       
     },[])
     
+    console.log(userDetails);
 
   const isTeacher = user?.roles?.includes("ROLE_TEACHER");
 
@@ -119,7 +120,7 @@ const ProfilePage = () => {
           <Subjects id={id} isTeacher={isTeacher} />
         </div>
 
-        {isTeacher && (
+        {isTeacher &&  (
             <TeacherRating id={id}/>
         )}
 
@@ -127,7 +128,7 @@ const ProfilePage = () => {
 
 
         {/* Conditional Teacher Classes Section */}
-        {isTeacher && (
+        {isTeacher && userDetails.id === user?.id &&(
             <MyClasses />
         )}
 
