@@ -20,7 +20,7 @@ const ProfilePage = () => {
   useEffect(() =>{
       const fetchUserDetails = async (id)=>{
         try{
-          const response = await fetch(`http://34.21.152.245:8080/api/v1/users/getuser/${id}`,{
+          const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/v1/users/getuser/${id}`,{
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}` 
@@ -112,7 +112,7 @@ const ProfilePage = () => {
               {isTeacher ? 
                 <InfoItem icon={<Video size={16}/>} label="Mode" value={profileData.mode} />
                :
-               <InfoItem icon={<School size={16}/>} label="Mode" value={profileData.school} />}
+               <InfoItem icon={<School size={16}/>} label="School" value={profileData.school} />}
             </div>
           </div>
 

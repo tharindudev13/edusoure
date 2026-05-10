@@ -9,7 +9,7 @@ const Teacher = ({ name,id }) => {
     useEffect(() => {
         const fetchUserId = async() => {
             try{
-            const response = await fetch(`http://34.21.152.245:8080/api/v1/teachers/userId/${id}`,{
+            const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/v1/teachers/userId/${id}`,{
                 method: "GET",
                 headers: {
                 "Authorization" : `Bearer ${token}`

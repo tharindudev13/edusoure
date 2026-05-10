@@ -10,7 +10,7 @@ const RecentMaterials = () => {
         const fetchRecentmaterials = async() => {
 
             try{
-                const response = await fetch('http://34.21.152.245:8080/api/v1/material/recents',{
+                const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/v1/material/recents`,{
                 method: "GET",
                 headers:{
                     "Authorization" : `Bearer ${token}`

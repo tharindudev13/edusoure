@@ -10,7 +10,7 @@ const Subjects = ({id,isTeacher}) => {
             
         const targetType = isTeacher ? 'teachers' : 'students';
           try{
-            const response = await fetch(`http://34.21.152.245:8080/api/v1/${targetType}/subjects/${id}`,{
+            const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/v1/${targetType}/subjects/${id}`,{
               method: 'GET',
               headers: {
                   'Authorization': `Bearer ${token}` 

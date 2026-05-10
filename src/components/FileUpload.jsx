@@ -10,7 +10,7 @@ const FileUpload = () => {
     const [subject,setSubject] = useState('Physics')
     const [file,setFile] = useState()
     const {user} = useSelector((state) => state.auth)
-    const author = user.id
+    const author = user?.id
     const token = localStorage.getItem('token')
     const [loading,setLoading] = useState(false)
 
@@ -45,7 +45,7 @@ const FileUpload = () => {
 
         try{
             setLoading(true)
-            const response = await fetch("http://34.21.152.245:8080/api/v1/material/upload",{
+            const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/v1/material/upload`,{
                 method: "POST",
                 headers: {
                     "Authorization" : `Bearer ${token}`

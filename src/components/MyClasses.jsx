@@ -11,7 +11,7 @@ const MyClasses = () => {
     useEffect(() => {
         const fetchMyClasses = async () =>{
             try{
-                const response = await fetch(`http://34.21.152.245:8080/api/v1/class/classes-by-teacher/${user.id}`, {
+                const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/v1/class/classes-by-teacher/${user?.id}`, {
                     headers: {
                         "Authorization": `Bearer ${token}`
                     }

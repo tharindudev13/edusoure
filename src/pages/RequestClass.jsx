@@ -56,7 +56,7 @@ const RequestClassForm = () => {
     useEffect(() => {
         const fetchTc_id = async (id) =>{
             try{
-                const response = await fetch(`http://34.21.152.245:8080/api/v1/teachers/id/${id}`,{
+                const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/v1/teachers/id/${id}`,{
                     method: "GET",
                     headers: {
                         "Authorization" : `Bearer ${token}`
@@ -101,7 +101,7 @@ const RequestClassForm = () => {
 
         try{
             setLoading(true)
-            const response = await fetch('http://34.21.152.245:8080/api/v1/class/req',{
+            const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/v1/class/req`,{
                 method: "POST",
                 headers: {"Authorization" : `Bearer ${token}`},
                 body: formData

@@ -20,7 +20,7 @@ const ClassesPage = () => {
             const token = localStorage.getItem('token');
             try {
                 // Using your existing base URL structure
-                const response = await fetch('http://34.21.152.245:8080/api/v1/class/getclasses', {
+                const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/v1/class/getclasses`, {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
                 if (response.ok) {
