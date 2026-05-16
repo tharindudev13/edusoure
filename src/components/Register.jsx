@@ -1,12 +1,109 @@
 import  { useState } from 'react';
-import { User, BookOpen, Camera, ChevronRight, ChevronLeft } from 'lucide-react';
+import { User, BookOpen, Camera, ChevronRight, ChevronLeft, EyeOff, Eye } from 'lucide-react';
+import { Alert } from './Alert';
+import Loading from './Loading';
+import SuccessModal from './FeedBack';
+import { useNavigate } from 'react-router';
 
 const RegisterPage = () => {
   const [step, setStep] = useState(1);
-  const [role, setRole] = useState(null);
+  const [role, setRole] = useState([]);
+
+  const [loading,setLoading] = useState(false)
 
   const nextStep = () => setStep(step + 1);
   const prevStep = () => setStep(step - 1);
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => setShowPassword(prev => !prev);
+
+  const [profilePicPreview, setProfilePicPreview] = useState();
+  const [profilePicFile, setProfilePicFile] = useState();
+  const [name, setName] = useState("");
+  const [school,setSchool] = useState("");
+  const [phone,setPhone] = useState("");
+  const [address,setAddress] = useState("");
+  const [mode,setMode] = useState("");
+  const [stream,setStream] = useState("");
+  const [subjects,setSubjects] = useState([]);
+  const [email,setEmail] = useState("");
+  const [password,setPassword] = useState("");
+  const [confirmPassword,setConfirmPassword] = useState("");
+
+  const [showSuccess,setShowSuccess] = useState(false)
+  const [btn,setBtn] = useState("")
+  const [heading,setHeading] = useState("")
+  const [messege,setMessege] = useState("")
+  const [type,setType] = useState("")
+
+  const navigate = useNavigate()
+
+  const toggleSubject = (sub) => {
+    setSubjects((prev) =>
+      prev.includes(sub) ? prev.filter((item) => item !== sub) : [...prev, sub]
+    );
+  };
+
+  const createUser = async() => {
+    const formData = new FormData()
+
+    const newUser = {
+      email: email,
+      password: password,
+      roles: [role],
+      stream: stream,
+      subjects: subjects,
+      info: {
+        name: name,
+        phone: phone,
+        address: address,
+        ...(role === "TEACHER" && { mode }),
+        ...(role === "STUDENT" && { school })
+      }
+      
+    }
+    formData.append('data', new Blob([JSON.stringify(newUser)], {type: 'application/json'}));
+    if(profilePicFile) formData.append('profile_pic',profilePicFile);
+
+    try{
+      setLoading(true)
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/v1/users/create`,{
+                method: "POST",
+                body: formData
+            })
+      
+      if(response.ok){
+        setShowSuccess(true)
+        setBtn("Go to Login")
+        setMessege("Your Account created successfully...!")
+        setHeading("Account created!")
+        setType("success")
+        setLoading(false)
+      }else{
+        setShowSuccess(true);
+        setBtn("Back")
+        setMessege("Failed to send your request!. Please try again")
+        setHeading("Request Failed!")
+        setType("fail")
+        setLoading(false)
+      }
+    }catch(error){
+      setShowSuccess(false);
+      throw error
+    }finally{
+      setLoading(false)
+    }
+
+
+    
+  }
+
+  if(loading){
+    return(
+      <Loading messege={"Creating User...."} />
+    )
+  }
 
   return (
     <div className="min-h-screen bg-slate-50 py-12 px-4">
@@ -36,15 +133,15 @@ const RegisterPage = () => {
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
                 <button 
-                  onClick={() => {setRole('student'); nextStep();}}
-                  className={`p-8 border-2 rounded-2xl transition-all text-center ${role === 'student' ? 'border-blue-600 bg-blue-50' : 'border-slate-100 hover:border-blue-200'}`}
+                  onClick={() => {setRole('STUDENT'); nextStep();}}
+                  className={`p-8 border-2 rounded-2xl transition-all text-center ${role === 'STUDENT' ? 'border-blue-600 bg-blue-50' : 'border-slate-100 hover:border-blue-200'}`}
                 >
                   <User className="w-12 h-12 text-blue-600 mx-auto mb-4" />
                   <span className="font-bold text-slate-800">I am a Student</span>
                 </button>
                 <button 
-                  onClick={() => {setRole('teacher'); nextStep();}}
-                  className={`p-8 border-2 rounded-2xl transition-all text-center ${role === 'teacher' ? 'border-blue-600 bg-blue-50' : 'border-slate-100 hover:border-blue-200'}`}
+                  onClick={() => {setRole('TEACHER'); nextStep();}}
+                  className={`p-8 border-2 rounded-2xl transition-all text-center ${role === 'TEACHER' ? 'border-blue-600 bg-blue-50' : 'border-slate-100 hover:border-blue-200'}`}
                 >
                   <BookOpen className="w-12 h-12 text-blue-600 mx-auto mb-4" />
                   <span className="font-bold text-slate-800">I am a Teacher</span>
@@ -59,15 +156,63 @@ const RegisterPage = () => {
               <h3 className="text-2xl font-bold text-slate-800 mb-6">Personal Information</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="col-span-2 flex justify-center mb-4">
-                  <div className="w-24 h-24 bg-slate-100 rounded-full border-2 border-dashed border-slate-300 flex flex-col items-center justify-center text-slate-400 cursor-pointer hover:bg-slate-50 transition-colors">
-                    <Camera className="w-8 h-8" />
-                    <span className="text-[10px] font-bold uppercase mt-1">Profile Pic</span>
-                  </div>
+                  <label className="w-24 h-24 bg-slate-100 rounded-full border-2 border-dashed border-slate-300 flex flex-col items-center justify-center text-slate-400 cursor-pointer hover:bg-slate-50 transition-colors">
+                    {profilePicPreview ? (
+                      <img src={profilePicPreview} alt="Profile Preview" className="w-full h-full object-cover rounded-full" />
+                    ) : (
+                      <>
+                        <Camera className="w-6 h-6 mb-1" />
+                        <span className="text-[10px] font-bold uppercase mt-1">Profile Pic</span>
+                      </>
+                    )}
+                    <input required onChange={(e) => {
+                                              setProfilePicPreview(URL.createObjectURL(e.target.files[0]))
+                                              setProfilePicFile(e.target.files[0])}} 
+                                              type="file" className="hidden" accept='image/*'/>
+                  </label>
                 </div>
-                <input type="text" placeholder="Full Name" className="p-3 rounded-xl border border-slate-200 outline-none focus:border-blue-500" />
-                <input type="text" placeholder="NIC Number" className="p-3 rounded-xl border border-slate-200 outline-none focus:border-blue-500" />
-                <input type="text" placeholder="Phone Number" className="p-3 rounded-xl border border-slate-200 outline-none focus:border-blue-500" />
-                <input type="text" placeholder="Address" className="p-3 rounded-xl border border-slate-200 outline-none focus:border-blue-500" />
+                <input 
+                  type="text" 
+                  placeholder="Full Name" 
+                  className="p-3 rounded-xl border border-slate-200 outline-none focus:border-blue-500" 
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+                {role === 'TEACHER' ? (
+                  <input 
+                    required
+                    type="text" 
+                    placeholder="Online/Physical or Hybrid?" 
+                    className="p-3 rounded-xl border border-slate-200 outline-none focus:border-blue-500" 
+                    value={mode}
+                    onChange={(e) => setMode(e.target.value)}
+                  />
+                ): (
+                  <input 
+                    required
+                    type="text" 
+                    placeholder="School Name" 
+                    className="p-3 rounded-xl border border-slate-200 outline-none focus:border-blue-500" 
+                    value={school}
+                    onChange={(e) => setSchool(e.target.value)}
+                  />
+                )}
+                <input 
+                  required
+                  type="text" 
+                  placeholder="Phone Number" 
+                  className="p-3 rounded-xl border border-slate-200 outline-none focus:border-blue-500" 
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                />
+                <input 
+                  required
+                  type="text" 
+                  placeholder="Address" 
+                  className="p-3 rounded-xl border border-slate-200 outline-none focus:border-blue-500" 
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
+                />
               </div>
             </div>
           )}
@@ -78,11 +223,18 @@ const RegisterPage = () => {
               <h3 className="text-2xl font-bold text-slate-800">Academic Focus</h3>
               <div>
                 <label className="block text-sm font-bold text-slate-600 mb-3">Select Stream</label>
-                <select className="w-full p-3 rounded-xl border border-slate-200 outline-none">
+                <select 
+                  required
+                  className="w-full p-3 rounded-xl border border-slate-200 outline-none"
+                  value={stream}
+                  onChange={(e) => setStream(e.target.value)}
+                >
                   <option>Physical Science (Combined Maths)</option>
                   <option>Biological Science</option>
-                  <option>Engineering Technology</option>
+                  <option>Technology</option>
                   <option>Commerce</option>
+                  <option>Arts</option>
+                  <option>Mixed</option>
                 </select>
               </div>
               <div>
@@ -90,7 +242,13 @@ const RegisterPage = () => {
                 <div className="grid grid-cols-2 gap-3">
                   {['Mathematics', 'Physics', 'Chemistry', 'ICT', 'Biology'].map(sub => (
                     <label key={sub} className="flex items-center gap-3 p-3 border border-slate-100 rounded-lg hover:bg-slate-50 cursor-pointer">
-                      <input type="checkbox" className="w-4 h-4 text-blue-600 rounded" />
+                      <input 
+                        required
+                        type="checkbox" 
+                        className="w-4 h-4 text-blue-600 rounded" 
+                        checked={subjects.includes(sub)}
+                        onChange={() => toggleSubject(sub)}
+                      />
                       <span className="text-sm text-slate-700">{sub}</span>
                     </label>
                   ))}
@@ -104,9 +262,21 @@ const RegisterPage = () => {
             <div className="space-y-6">
               <h3 className="text-2xl font-bold text-slate-800">Security Credentials</h3>
               <div className="space-y-4">
-                <input type="email" placeholder="Email Address" className="w-full p-3 rounded-xl border border-slate-200 outline-none focus:border-blue-500" />
-                <input type="password" placeholder="Password" className="w-full p-3 rounded-xl border border-slate-200 outline-none focus:border-blue-500" />
-                <input type="password" placeholder="Confirm Password" className="w-full p-3 rounded-xl border border-slate-200 outline-none focus:border-blue-500" />
+                <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email Address" className="w-full p-3 rounded-xl border border-slate-200 outline-none focus:border-blue-500" />
+                <input type="password" required value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" className="w-full p-3 rounded-xl border border-slate-200 outline-none focus:border-blue-500" />
+                
+                {password !== confirmPassword && <Alert message={"Passwords are not matching!"}/>}
+                <div className="relative flex items-center">
+                <input type={showPassword ? "text" : "password"} required value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} placeholder="Confirm Password" className="w-full p-3 rounded-xl border border-slate-200 outline-none focus:border-blue-500" />
+                <button
+                  type="button" // CRITICAL: Keeps the button from accidentally submitting your form
+                  onClick={togglePasswordVisibility}
+                  className="absolute right-3 text-slate-400 hover:text-slate-600 transition-colors focus:outline-none cursor-pointer"
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                >
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
+                </div>
               </div>
               <div className="p-4 bg-blue-50 rounded-xl text-blue-700 text-xs">
                 By clicking register, you agree to provide accurate information for academic verification purposes.
@@ -117,7 +287,7 @@ const RegisterPage = () => {
           {/* Navigation Buttons */}
           <div className="mt-10 flex justify-between pt-6 border-t border-slate-100">
             {step > 1 && (
-              <button onClick={prevStep} className="flex items-center gap-2 px-6 py-3 font-bold text-slate-500 hover:text-slate-800 transition-colors">
+              <button onClick={prevStep}  className="flex items-center gap-2 px-6 py-3 font-bold text-slate-500 hover:text-slate-800 transition-colors">
                 <ChevronLeft className="w-5 h-5" /> Back
               </button>
             )}
@@ -127,7 +297,7 @@ const RegisterPage = () => {
                   Continue <ChevronRight className="w-5 h-5" />
                 </button>
               ) : (
-                <button className="px-10 py-3 bg-green-600 text-white font-bold rounded-xl shadow-lg hover:bg-green-700 transition-all">
+                <button onClick={createUser} disabled={password !== confirmPassword} className="cursor-pointer px-10 py-3 bg-green-600 text-white font-bold rounded-xl shadow-lg hover:bg-green-700 transition-all">
                   Register Now
                 </button>
               )}
@@ -135,6 +305,23 @@ const RegisterPage = () => {
           </div>
         </div>
       </div>
+
+      <SuccessModal
+      isOpen={showSuccess}
+      onClose={() =>{
+        if(showSuccess){
+           navigate('/login')
+        }else{
+          navigate('/register')
+        }
+        setShowSuccess(false)
+      }}
+      button_text={btn}
+      heading={heading}
+      messege={messege}
+      type={type}
+      />
+
     </div>
   );
 };

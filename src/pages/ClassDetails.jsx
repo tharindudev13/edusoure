@@ -5,19 +5,28 @@ import Loading from '../components/Loading';
 import { useSelector } from 'react-redux';
 import { useParams,Link} from 'react-router';
 import Teacher from '../components/Teacher';
+import SuccessModal from '../components/FeedBack';
 
 const ClassDetailsPage = () => {
-  // Example State for the new review input
   const [reviewText, setReviewText] = useState("");
   const [rating, setRating] = useState(0);
   const token = localStorage.getItem('token')
   const [loading,setLoading] = useState(true)
   const [details,setDetails] = useState({})
   const {id} = useParams()
+  const [messege,setMessage] = useState("Loading Class Details...")
+
+
 
   const{user} = useSelector((state) => state.auth)
 
   const isStudent = user?.roles?.includes("ROLE_STUDENT");
+
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [heading,setHeading] = useState("")
+  const [msg,setMsg] = useState("")
+  const [type,setType] = useState("")
+  const [btn,setBtn] = useState("")
 
   
 
@@ -51,16 +60,62 @@ const ClassDetailsPage = () => {
     fetchClassDetails()
   },[id])
 
+  const submitReview = async() => {
+      try{
+        setLoading(true)
+        setMessage("Submitting your review...")
+        const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/v1/class/review`,{
+          method: 'POST',
+          headers: {
+            "Authorization" : `Bearer ${token}`,
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            class_id: Number(id)  ,
+            user_id: Number(user.id),
+            text: reviewText,
+            rating: Number(rating)
+          })
+        })
+        const result = (await response.text()).trim()
+        if(result === "Review Submitted Successfully"){
+          setShowSuccess(true)
+          setReviewText("")
+          setRating(0)
+          setBtn("Ok")
+          setHeading("Review Submitted!")
+          setMsg("You successfuly reviewed this class")
+          setType('success')
+        }else if(result === "You have already reviewed this class."){
+          setShowSuccess(true)
+          setBtn("Back")
+          setHeading("Already Reviewed!")
+          setMsg("You have already reviewed this class.")
+          setType('error')
+        }
+
+      }catch(error){
+        console.log(error);
+        setShowSuccess(false)
+        setBtn("Back")
+        setHeading("Review Failed!")
+        setMsg("Failed to submit your review!")
+        setType('error')
+        
+      }finally{
+        setLoading(false)
+      }
+  }
+
   
 
 
-  console.log(details);
 
   
 
   if(loading){
     return(
-      <Loading messege={"Loading Class Details..."}/>
+      <Loading messege={messege}/>
     )
   }
 
@@ -98,7 +153,7 @@ const ClassDetailsPage = () => {
               <Teacher name={details.teacher.name} id={details.teacher.tcId}/>
               <div className="flex items-center gap-1">
                 <Star className="w-5 h-5 fill-yellow-400 text-yellow-400" />
-                <span className="font-bold text-slate-800">{details.avgRating}</span>
+                <span className="font-bold text-slate-800">{details.avgRating?.toFixed(2)}</span>
                 <span className="text-sm text-slate-400">({details.reviews? details.reviews.length : 0})</span>
               </div>
             </div>
@@ -176,7 +231,7 @@ const ClassDetailsPage = () => {
                   value={reviewText}
                   onChange={(e) => setReviewText(e.target.value)}
                 />
-                <button className="flex items-center justify-center gap-2 w-full md:w-auto px-8 py-3 bg-white text-blue-600 font-bold rounded-xl hover:bg-slate-100 transition-colors">
+                <button onClick={submitReview} className="flex items-center justify-center gap-2 w-full md:w-auto px-8 py-3 bg-white text-blue-600 font-bold rounded-xl hover:bg-slate-100 transition-colors">
                   <Send className="w-4 h-4" />
                   Submit Review
                 </button>
@@ -223,6 +278,13 @@ const ClassDetailsPage = () => {
         </div>
 
       </div>
+      <SuccessModal isOpen={showSuccess} 
+                    onClose={() => setShowSuccess(false)} 
+                    heading={heading} 
+                    messege={msg} 
+                    type={type}
+                    button_text={btn}
+                    />
     </div>
     </>
   );

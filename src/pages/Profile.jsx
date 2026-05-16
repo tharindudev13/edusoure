@@ -1,6 +1,5 @@
 import { useSelector } from 'react-redux';
-import { User, Phone, MapPin,  FileText,  Contact, Video, School } from 'lucide-react';
-import MaterialCard from '../components/FileCard'; // Using the card we built earlier
+import { User, Phone, MapPin, Contact, Video, School } from 'lucide-react';
 import {  useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import Loading from '../components/Loading';
@@ -9,6 +8,8 @@ import TeacherRating from '../components/TeacherRating';
 import RequestClassNav from '../components/Req';
 import MyClasses from '../components/MyClasses';
 import ActiveClasses from '../components/ActiveClasses';
+import MyUploads from '../components/MyUploads';
+import ActiveUploads from '../components/ActiveUploads';
 
 const ProfilePage = () => {
   const { user } = useSelector((state) => state.auth);
@@ -47,7 +48,6 @@ const ProfilePage = () => {
       
     },[id])
     
-    console.log(userDetails);
 
   const isTeacher = userDetails?.roles?.includes("TEACHER");
 
@@ -68,10 +68,7 @@ const ProfilePage = () => {
             phone: userDetails.info.phone,
             address: userDetails.info.address,
             mode: userDetails.info.mode,
-            school: userDetails.info.school,
-            uploadedMaterials: [
-            { id: 1, fileName: "Intro to ML.pdf", subject: "Machine Learning", author: "Saman", uploadedDate: "2026-04-10" }
-            ],
+            school: userDetails.info.school
         };
 
 
@@ -128,21 +125,20 @@ const ProfilePage = () => {
 
 
         {/* Conditional Teacher Classes Section */}
-        {(isTeacher && userDetails.id === user?.id) ?(
+        
+        {isTeacher && (
+          userDetails.id === user?.id ? (
             <MyClasses />
-        ) : <ActiveClasses id={userDetails?.id} />}
+          ) : (
+            <ActiveClasses id={userDetails?.id} />
+          )
+        )}
+        
 
         {/* Uploaded Materials Section */}
-        <section>
-          <h3 className="text-xl font-black text-slate-800 mb-6 flex items-center gap-2">
-            <FileText size={22} className="text-blue-600" /> Uploads
-          </h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {profileData.uploadedMaterials.map((material) => (
-              <MaterialCard key={material.id} {...material} />
-            ))}
-          </div>
-        </section>
+        {(userDetails.id === user?.id) ?(
+            <MyUploads />
+        ) : <ActiveUploads id={userDetails?.id} />}
       </div>
     </div>
         )
