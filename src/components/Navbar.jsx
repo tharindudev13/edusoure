@@ -9,7 +9,6 @@ const NavBar = () => {
   const { token, user } = useSelector((state) => state.auth);
   const navigate = useNavigate();
 
-  // Dynamic UI Avatar fallback if user has no profile pic or it fails to load
   const DEFAULT_AVATAR = `https://ui-avatars.com/api/?name=${encodeURIComponent(
     user?.name || "User"
   )}&background=2563eb&color=fff`;
@@ -81,7 +80,7 @@ const NavBar = () => {
       </nav>
 
       {/* --- BOTTOM MOBILE NAVIGATION BAR (Facebook-Style / Hidden on Desktop) --- */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 h-16 z-50 px-2 flex items-center justify-around shadow-[0_-2px_10px_rgba(0,0,0,0.05)]">
+      <div className="md:hidden fixed bottom-0 mt-10 left-0 right-0 bg-white border-t border-slate-200 h-16 z-50 px-2 flex items-center justify-around shadow-[0_-2px_10px_rgba(0,0,0,0.05)]">
         <NavLink to="/" className={mobileLinkClass}>
           <Home size={22} />
           <span className="text-[10px] font-bold uppercase tracking-wider">Home</span>

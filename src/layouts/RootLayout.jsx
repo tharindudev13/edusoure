@@ -6,8 +6,9 @@ const RootLayout = () => {
     return(
         <>
         <NavBar/>
-        <div className="min-h-screen bg-slate-50">
+        <div  className="-mt-16 min-h-screen bg-slate-50">
             <Outlet />
+            <div className="h-15 w-full clear-both" aria-hidden="true" />
         </div>    
 
         </>
