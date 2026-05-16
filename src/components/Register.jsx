@@ -155,7 +155,7 @@ const RegisterPage = () => {
             <div className="space-y-6">
               <h3 className="text-2xl font-bold text-slate-800 mb-6">Personal Information</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="col-span-2 flex justify-center mb-4">
+                <div className="col-span-1 md:col-span-2 flex justify-center mb-4">
                   <label className="w-24 h-24 bg-slate-100 rounded-full border-2 border-dashed border-slate-300 flex flex-col items-center justify-center text-slate-400 cursor-pointer hover:bg-slate-50 transition-colors">
                     {profilePicPreview ? (
                       <img src={profilePicPreview} alt="Profile Preview" className="w-full h-full object-cover rounded-full" />
