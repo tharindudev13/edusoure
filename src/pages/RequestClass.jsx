@@ -206,7 +206,7 @@ const RequestClassForm = () => {
                   <input  required type="text" value={duration} onChange={(e) =>setDuration(e.target.value)} placeholder="e.g. 4 hours/week" className="w-full mt-1 p-3 bg-slate-50 border-none rounded-xl text-sm focus:ring-2 focus:ring-blue-500 outline-none" />
                 </div>
                 <div>
-                  <label className="text-xs font-bold text-slate-400 uppercase ml-1">Hotline</label>
+                  <label className="text-xs font-bold text-slate-400 uppercase ml-1">Hotline (WhatsApp)</label>
                   <input  required type="text" value={hotline} onChange={(e) =>setHotline(e.target.value)} placeholder="e.g. +94789101112" className="w-full mt-1 p-3 bg-slate-50 border-none rounded-xl text-sm focus:ring-2 focus:ring-blue-500 outline-none" />
                 </div>
               </div>
@@ -288,7 +288,7 @@ const RequestClassForm = () => {
             </div>
 
             {/* Submit Button */}
-            <button onClick={() => requestClass()} className="w-full mt-10 bg-blue-600 text-white py-4 rounded-2xl font-bold shadow-lg shadow-blue-200 hover:bg-blue-700 transition-all active:scale-[0.98]">
+            <button onClick={() => requestClass()} className="cursor-pointer w-full mt-10 bg-blue-600 text-white py-4 rounded-2xl font-bold shadow-lg shadow-blue-200 hover:bg-blue-700 transition-all active:scale-[0.98]">
               Submit Request
             </button>
           </div>

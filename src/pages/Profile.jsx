@@ -8,6 +8,7 @@ import Subjects from '../components/Subjects';
 import TeacherRating from '../components/TeacherRating';
 import RequestClassNav from '../components/Req';
 import MyClasses from '../components/MyClasses';
+import ActiveClasses from '../components/ActiveClasses';
 
 const ProfilePage = () => {
   const { user } = useSelector((state) => state.auth);
@@ -44,11 +45,11 @@ const ProfilePage = () => {
       }
       fetchUserDetails(id)
       
-    },[])
+    },[id])
     
     console.log(userDetails);
 
-  const isTeacher = user?.roles?.includes("ROLE_TEACHER");
+  const isTeacher = userDetails?.roles?.includes("TEACHER");
 
   if (loading) {
     return (
@@ -71,7 +72,6 @@ const ProfilePage = () => {
             uploadedMaterials: [
             { id: 1, fileName: "Intro to ML.pdf", subject: "Machine Learning", author: "Saman", uploadedDate: "2026-04-10" }
             ],
-            classes: ["Batch 2026 - AI Core", "Advanced React"] // Only for Teachers
         };
 
 
@@ -128,9 +128,9 @@ const ProfilePage = () => {
 
 
         {/* Conditional Teacher Classes Section */}
-        {isTeacher && userDetails.id === user?.id &&(
+        {(isTeacher && userDetails.id === user?.id) ?(
             <MyClasses />
-        )}
+        ) : <ActiveClasses id={userDetails?.id} />}
 
         {/* Uploaded Materials Section */}
         <section>

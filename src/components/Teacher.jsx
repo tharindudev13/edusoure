@@ -28,7 +28,7 @@ const Teacher = ({ name,id }) => {
 
   return (
     <div className="flex items-center gap-2">
-        <Link to={`/profile/${name}/${tchId}`} className="flex items-center gap-2 hover:underline cursor-pointer">
+        <Link to={`/profile/${tchId}/${name}`} className="flex items-center gap-2 hover:underline cursor-pointer">
             <User className="w-5 h-5 text-blue-500" />
             <span className="font-medium text-slate-800">{name}</span>
         </Link>

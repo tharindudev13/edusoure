@@ -23,7 +23,7 @@ const TeacherRating = ({id}) => {
             }
         }
         fetchRatings(id)
-    },[])
+    },[id])
 
     return(
         <>

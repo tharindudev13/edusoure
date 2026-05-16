@@ -3,7 +3,7 @@ import { Star, MessageCircle, Send, ImageIcon } from 'lucide-react';
 import Review from '../components/Review';
 import Loading from '../components/Loading';
 import { useSelector } from 'react-redux';
-import { useParams} from 'react-router';
+import { useParams,Link} from 'react-router';
 import Teacher from '../components/Teacher';
 
 const ClassDetailsPage = () => {
@@ -49,7 +49,7 @@ const ClassDetailsPage = () => {
       }
     }
     fetchClassDetails()
-  },[])
+  },[id])
 
   
 
@@ -104,8 +104,7 @@ const ClassDetailsPage = () => {
             </div>
 
             <p className="text-slate-600 leading-relaxed text-lg">
-              This course covers the architectural foundations of deep learning. Perfect for university students 
-              focusing on AI and ML projects, specifically those working with edge computing and cloud recognition logic.
+              {details.description}
             </p>
           </div>
         </div>
@@ -192,7 +191,7 @@ const ClassDetailsPage = () => {
           <div className="bg-white p-6 rounded-2xl border border-slate-200 sticky top-6">
             <h4 className="font-bold text-slate-800 mb-4">Class Details</h4>
             <div className="space-y-4">
-              <div className="flex justify-between text-sm">
+              <div className="flex justify-between items-start text-sm gap-17.5">
                 <span className="text-slate-500">Subject</span>
                 <span className="font-semibold text-slate-800">{details.subject}</span>
               </div>
@@ -206,10 +205,19 @@ const ClassDetailsPage = () => {
                   <span className="font-semibold text-slate-800">{details.duration}</span>
                 </div>
               )}
+              {details.lms && (
+                <div className="flex justify-between text-sm">
+                  <span className="text-slate-500">LMS</span>
+                  <Link to={`https://${details.lms}`} className="font-semibold text-slate-800  hover:text-blue-600 transition-colors" target="_blank" rel="noopener noreferrer">
+                    {details.lms}
+                  </Link>
+                </div>
+              )}
+              
               
             </div>
-            <button className="w-full mt-6 py-4 bg-blue-600 text-white font-bold rounded-xl shadow-lg hover:bg-blue-700 transition-all">
-              Enroll Now
+            <button onClick={() => window.open(`https://wa.me/${details.hotline}`, '_blank')} className="cursor-pointer w-full mt-6 py-4 bg-blue-600 text-white font-bold rounded-xl shadow-lg hover:bg-blue-700 transition-all">
+              Contact Us
             </button>
           </div>
         </div>

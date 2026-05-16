@@ -26,7 +26,7 @@ const Subjects = ({id,isTeacher}) => {
           }
         }
         fetchSubjects(id)
-      },[])
+      },[id])
 
 
        
