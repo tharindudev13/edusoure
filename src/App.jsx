@@ -9,6 +9,7 @@ import ClassesPage from "./pages/Classes";
 import ClassDetailsPage from "./pages/ClassDetails";
 import MaterialsPage from "./pages/Materials";
 import RequestClassForm from "./pages/RequestClass";
+import ComingSoon from "./pages/ComingSoon";
 
 function App() {
 
@@ -24,7 +25,7 @@ function App() {
         <Route path="/class/:teacher/:id" element={<ClassDetailsPage />} />
         <Route path="/materials" element={<MaterialsPage />} />
         <Route path="/request-class" element={<RequestClassForm />} />
-        {/* <Route path="/test" element={<RequestClassNav />} /> */}
+        <Route path="/quizes" element={<ComingSoon />} />
       </Route>
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />

@@ -1,4 +1,4 @@
-import { LogIn, LogOut, Home, BookOpen, FileText, User as UserIcon } from "lucide-react";
+import { LogIn, LogOut, Home, BookOpen, FileText, CircleQuestionMark } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../features/authSlice";
 import { NavLink, useNavigate } from "react-router";
@@ -45,7 +45,7 @@ const NavBar = () => {
             <NavLink to="/" className={desktopLinkClass}>Home</NavLink>
             <NavLink to="/classes" className={desktopLinkClass}>Classes</NavLink>
             <NavLink to="/materials" className={desktopLinkClass}>Study Materials</NavLink>
-            <NavLink to={`/myprofile/${user?.id}/${user?.name}`} className={desktopLinkClass}>Profile</NavLink>
+            <NavLink to="/quizes" className={desktopLinkClass}>Quizes</NavLink>
           </div>
 
           {/* Right Side: Auth / Profile Section */}
@@ -97,9 +97,9 @@ const NavBar = () => {
           <span className="text-[10px] font-bold uppercase tracking-wider">Materials</span>
         </NavLink>
 
-        <NavLink to={`/myprofile/${user?.id}/${user?.name}`} className={mobileLinkClass}>
-          <UserIcon size={22} />
-          <span className="text-[10px] font-bold uppercase tracking-wider">Profile</span>
+        <NavLink to="/quizes" className={mobileLinkClass}>
+          <CircleQuestionMark size={22} />
+          <span className="text-[10px] font-bold uppercase tracking-wider">Quizes</span>
         </NavLink>
 
         {/* Mobile-only interactive action for Logout if token exists */}

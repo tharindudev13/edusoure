@@ -240,7 +240,7 @@ const RegisterPage = () => {
               <div>
                 <label className="block text-sm font-bold text-slate-600 mb-3">Interested Subjects</label>
                 <div className="grid grid-cols-2 gap-3">
-                  {['Mathematics', 'Physics', 'Chemistry', 'ICT', 'Biology'].map(sub => (
+                  {['Combined Maths', 'Physics', 'Chemistry', 'ICT', 'Biology','Business Studies','Accounting','Economics','Agriculture','Science for Technology','Engineering Technology','Bio systems technology'].map(sub => (
                     <label key={sub} className="flex items-center gap-3 p-3 border border-slate-100 rounded-lg hover:bg-slate-50 cursor-pointer">
                       <input 
                         required
