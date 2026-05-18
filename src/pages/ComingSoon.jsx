@@ -1,7 +1,6 @@
 import { ArrowLeft, Rocket, Clock } from 'lucide-react';
 
 const ComingSoon = () => {
-  // Simple handler to safely navigate back
   const handleBack = () => {
     if (window.history.length > 1) {
       window.history.back();
