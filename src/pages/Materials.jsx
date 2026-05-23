@@ -8,6 +8,10 @@ const MaterialsPage = () => {
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState("");
 
+    useEffect(() => {{
+      document.title = "Materials | EduSource"
+    }})
+
     useEffect(() => {
         const fetchAllMaterials = async () => {
             const token = localStorage.getItem('token');

@@ -1,4 +1,5 @@
 import { ArrowLeft, Rocket, Clock } from 'lucide-react';
+import { useEffect } from 'react';
 
 const ComingSoon = () => {
   const handleBack = () => {
@@ -8,6 +9,10 @@ const ComingSoon = () => {
       window.location.href = '/dashboard';
     }
   };
+
+  useEffect(() => {{
+        document.title = "Coming Soon | EduSource"
+      }})
 
   return (
     <div className="min-h-screen bg-[#0d0e12] text-slate-200 flex flex-col items-center justify-center p-6 relative overflow-hidden select-none">

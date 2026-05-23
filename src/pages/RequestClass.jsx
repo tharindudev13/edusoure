@@ -1,5 +1,5 @@
 import { Plus, Upload, Info, Image as ImageIcon, FileText } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import {  useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import Loading from '../components/Loading';
 import SuccessModal from '../components/FeedBack';
@@ -18,7 +18,6 @@ const RequestClassForm = () => {
     const[duration,setDuration] = useState('')
     const[lms,setLms] = useState('')
     const[hotline,setHotline] = useState('')
-    const[tc_id,setTc_id] = useState(null)
     const[images,setImages] = useState([])
     
 
@@ -39,6 +38,10 @@ const RequestClassForm = () => {
     const navigate = useNavigate()
 
 
+  
+    useEffect(() => {{
+      document.title = "Request Class | EduSource"
+    }})
 
     const handleGallery = (e,index) => {
         const file = e.target.files[0]
@@ -52,28 +55,7 @@ const RequestClassForm = () => {
         }
     }
 
-    console.log(images);
-    useEffect(() => {
-        const fetchTc_id = async (id) =>{
-            try{
-                const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/v1/teachers/id/${id}`,{
-                    method: "GET",
-                    headers: {
-                        "Authorization" : `Bearer ${token}`
-                    }
-                })
-
-                if(response.ok){
-                    const result = await response.json()
-                    setTc_id(result)
-                }
-            }catch(error){
-                console.log(error);
-            }
-        }
-        fetchTc_id(user.id)
-    },[])
-
+    
     const requestClass = async() => {
         const formData = new FormData()
 
@@ -81,7 +63,7 @@ const RequestClassForm = () => {
             subject: subject,
             year: year,
             tc_name: teacherName,
-            tcId: tc_id,
+            user_id: user.id,
             mode: mode,
             duration: duration,
             lms: lms,
@@ -89,6 +71,7 @@ const RequestClassForm = () => {
             hotline: hotline,
             desc: desc
         }
+        
 
         formData.append('data', new Blob([JSON.stringify(classData)], {type: 'application/json'}));
         if(thumbFile) formData.append('thumbnail',thumbFile);
@@ -106,6 +89,10 @@ const RequestClassForm = () => {
                 headers: {"Authorization" : `Bearer ${token}`},
                 body: formData
             })
+
+            console.log(formData);
+            
+            
 
             if(response.ok){
                 setShowSuccess(true);

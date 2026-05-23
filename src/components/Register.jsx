@@ -1,4 +1,4 @@
-import  { useState } from 'react';
+import  { useEffect, useState } from 'react';
 import { User, BookOpen, Camera, ChevronRight, ChevronLeft, EyeOff, Eye } from 'lucide-react';
 import { Alert } from './Alert';
 import Loading from './Loading';
@@ -98,6 +98,10 @@ const RegisterPage = () => {
 
     
   }
+
+  useEffect(() => {{
+        document.title = "Register | EduSource"
+      }})
 
   if(loading){
     return(
@@ -287,13 +291,13 @@ const RegisterPage = () => {
           {/* Navigation Buttons */}
           <div className="mt-10 flex justify-between pt-6 border-t border-slate-100">
             {step > 1 && (
-              <button onClick={prevStep}  className="flex items-center gap-2 px-6 py-3 font-bold text-slate-500 hover:text-slate-800 transition-colors">
+              <button onClick={prevStep}  className="cursor-pointer flex items-center gap-2 px-6 py-3 font-bold text-slate-500 hover:text-slate-800 transition-colors">
                 <ChevronLeft className="w-5 h-5" /> Back
               </button>
             )}
             <div className="ml-auto">
               {step < 4 ? (
-                <button onClick={nextStep} className="flex items-center gap-2 px-8 py-3 bg-blue-600 text-white font-bold rounded-xl shadow-lg hover:bg-blue-700 transition-all">
+                <button onClick={nextStep} className="cursor-pointer flex items-center gap-2 px-8 py-3 bg-blue-600 text-white font-bold rounded-xl shadow-lg hover:bg-blue-700 transition-all">
                   Continue <ChevronRight className="w-5 h-5" />
                 </button>
               ) : (

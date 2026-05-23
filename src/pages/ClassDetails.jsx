@@ -107,6 +107,10 @@ const ClassDetailsPage = () => {
       }
   }
 
+  useEffect(() => {{
+      document.title = "Class Details | EduSource"
+    }})
+
   
 
 
@@ -231,7 +235,7 @@ const ClassDetailsPage = () => {
                   value={reviewText}
                   onChange={(e) => setReviewText(e.target.value)}
                 />
-                <button onClick={submitReview} className="flex items-center justify-center gap-2 w-full md:w-auto px-8 py-3 bg-white text-blue-600 font-bold rounded-xl hover:bg-slate-100 transition-colors">
+                <button onClick={submitReview} className="cursor-pointer flex items-center justify-center gap-2 w-full md:w-auto px-8 py-3 bg-white text-blue-600 font-bold rounded-xl hover:bg-slate-100 transition-colors">
                   <Send className="w-4 h-4" />
                   Submit Review
                 </button>

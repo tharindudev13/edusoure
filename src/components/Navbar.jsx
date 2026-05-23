@@ -1,13 +1,15 @@
 import { LogIn, LogOut, Home, BookOpen, FileText, CircleQuestionMark } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../features/authSlice";
-import { NavLink, useNavigate } from "react-router";
+import { Link, NavLink, useNavigate } from "react-router";
 import { useState } from "react";
+import SuccessModal from "./FeedBack";
 
 const NavBar = () => {
   const dispatch = useDispatch();
   const { token, user } = useSelector((state) => state.auth);
   const navigate = useNavigate();
+  const [active,setActive] = useState(false)
 
   const DEFAULT_AVATAR = `https://ui-avatars.com/api/?name=${encodeURIComponent(
     user?.name || "User"
@@ -36,7 +38,7 @@ const NavBar = () => {
         <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
           {/* Logo */}
           <div className="text-2xl font-black text-blue-600 tracking-tight">
-            EduSource
+            <Link to="/">EduSource</Link>
           </div>
 
           {/* Desktop Nav Links (Hidden on Mobile) */}
@@ -61,7 +63,7 @@ const NavBar = () => {
                 />
                 {/* Logout Button (Hidden on tiny mobile screens to save space) */}
                 <button
-                  onClick={handleLogout}
+                  onClick={() => setActive(true)}
                   className="hidden sm:flex items-center gap-2 px-3 py-2 text-red-500 font-bold text-sm hover:bg-red-50 rounded-lg transition-all cursor-pointer"
                 >
                   <LogOut size={18} /> Logout
@@ -104,7 +106,7 @@ const NavBar = () => {
         {/* Mobile-only interactive action for Logout if token exists */}
         {token && (
           <button
-            onClick={handleLogout}
+            onClick={() => setActive(true)}
             className="flex flex-col items-center justify-center flex-1 h-full gap-1 text-red-500 hover:text-red-600 cursor-pointer"
           >
             <LogOut size={22} />
@@ -115,6 +117,19 @@ const NavBar = () => {
       
       {/* Visual buffer element so absolute content at the bottom of pages doesn't get hidden behind the mobile navbar */}
       <div className="h-16 md:hidden" />
+
+      <SuccessModal 
+        isOpen={active}
+        onClose={() => {
+          handleLogout()
+          setActive(false)
+        }}
+        type="warning"
+        heading="Are you sure you want to logout?"
+        messege=""
+        button_text="Confirm Logout"
+        onCancel={() => setActive(false)}
+      />
     </>
   );
 };

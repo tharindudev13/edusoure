@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import MaterialCard from "./FileCard"
+import { Link } from "react-router"
 
 const RecentMaterials = () => {
 
@@ -40,7 +41,7 @@ const RecentMaterials = () => {
             <section>
           <div className="flex justify-between items-end mb-8">
             <h3 className="text-2xl font-black text-slate-800">Recently Added Materials</h3>
-            <a href="#" className="text-blue-600 font-bold text-sm hover:underline">Browse Library</a>
+            <Link to="/materials" className="text-blue-600 font-bold text-sm hover:underline cursor-pointer">Browse Library</Link>
           </div>
 
             {recents.length === 0 && (

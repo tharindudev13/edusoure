@@ -1,5 +1,5 @@
 import { Mail, Lock, LogIn } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router';
 import { loginUser } from '../features/authSlice';
@@ -22,6 +22,10 @@ const LoginPage = () => {
             }
         })
     }
+
+    useEffect(() => {{
+      document.title = "Login | EduSource"
+    }})
 
   return (
     <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">

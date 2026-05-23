@@ -19,6 +19,10 @@ const ProfilePage = () => {
 
   const {id} = useParams()
 
+  useEffect(() => {{
+      document.title = "Profile | EduSource"
+    }})
+
   useEffect(() =>{
       const fetchUserDetails = async (id)=>{
         try{

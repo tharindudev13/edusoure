@@ -28,7 +28,7 @@ const TopRatedClasses = () => {
         <section>
           <div className="flex justify-between items-end mb-8">
             <h3 className="text-2xl font-black text-slate-800">Top Rated Classes</h3>
-            <Link to={'/classes'} className="text-blue-600 font-bold text-sm hover:underline">View All</Link>
+            <Link to={'/classes'} className="text-blue-600 font-bold text-sm hover:underline cursor-pointer">View All</Link>
           </div>
           {topClasses.length === 0 && (
             <p className="text-gray-500 text-center py-16">No classes found!. Try checking your connection.....</p>

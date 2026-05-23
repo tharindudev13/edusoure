@@ -1,13 +1,16 @@
 import { useRouteError, useNavigate, Link } from 'react-router';
 import { AlertCircle, Home, RotateCcw, ShieldAlert, WifiOff, Lock } from 'lucide-react';
+import { useEffect } from 'react';
 
 const ErrorPage = () => {
     const error = useRouteError();
     const navigate = useNavigate();
 
-    // Mapping function for friendly messages
+    useEffect(() => {{
+      document.title = "Error | EduSource"
+    }})
+
     const getFriendlyErrorMessage = (err) => {
-        // 1. Handle HTTP Status Codes (from fetch/router)
         if (err?.status === 404) {
             return {
                 title: "Page Not Found",

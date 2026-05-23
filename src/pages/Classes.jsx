@@ -16,6 +16,7 @@ const ClassesPage = () => {
 
 
     useEffect(() => {
+        document.title = "Classes | EduSource";
         const fetchAllClasses = async () => {
             const token = localStorage.getItem('token');
             try {

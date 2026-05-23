@@ -90,7 +90,7 @@ const FileUpload = () => {
                 <span>{status.message}</span>
                 <button 
                     onClick={() => setStatus({ type: '', message: '' })}
-                    className="ml-2 font-bold hover:opacity-70"
+                    className="ml-2 font-bold hover:opacity-70 cursor-pointer"
                 >
                     ✕
                 </button>
@@ -153,7 +153,7 @@ const FileUpload = () => {
       />
     </div>
     
-    <button onClick={handleUpload} className="w-full md:w-auto bg-blue-600 text-white px-6 py-2.5 rounded-xl font-bold hover:bg-blue-700 transition-all flex items-center justify-center gap-2 shadow-md active:scale-95">
+    <button onClick={handleUpload} className="cursor-pointer w-full md:w-auto bg-blue-600 text-white px-6 py-2.5 rounded-xl font-bold hover:bg-blue-700 transition-all flex items-center justify-center gap-2 shadow-md active:scale-95">
       <PlusCircle size={18} /> <span>Upload</span>
     </button>
   </div>

@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Block search crawlers from indexing private student/admin environments
+Disallow: /reset-password
+Disallow: /request-class
+
+Sitemap: https://edusource.lk/sitemap.xml
