@@ -9,7 +9,9 @@ import ClassesPage from "./pages/Classes";
 import ClassDetailsPage from "./pages/ClassDetails";
 import MaterialsPage from "./pages/Materials";
 import RequestClassForm from "./pages/RequestClass";
-import ComingSoon from "./pages/ComingSoon";
+// import ComingSoon from "./pages/ComingSoon";
+import QuizEngine from "./pages/Quiz";
+import QuizPlay from "./components/QuizPlay";
 
 function App() {
 
@@ -25,7 +27,8 @@ function App() {
         <Route path="/class/:teacher/:id" element={<ClassDetailsPage />} />
         <Route path="/materials" element={<MaterialsPage />} />
         <Route path="/request-class" element={<RequestClassForm />} />
-        <Route path="/quizes" element={<ComingSoon />} />
+        <Route path="/quizes" element={<QuizEngine />} />
+        <Route path="/quiz/:id" element={<QuizPlay />} />
       </Route>
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
