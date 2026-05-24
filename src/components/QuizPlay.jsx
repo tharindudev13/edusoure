@@ -1,7 +1,8 @@
 import  { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router";
 
-export default function QuizPlay({ onQuizComplete }) {
+export default function QuizPlay() {
   const [currentIdx, setCurrentIdx] = useState(0);
   const [selectedAnswerId, setSelectedAnswerId] = useState(null);
   const [hasChecked, setHasChecked] = useState(false);
@@ -10,6 +11,7 @@ export default function QuizPlay({ onQuizComplete }) {
   const [activeQuiz,setActiveQuiz] = useState()
   const token = localStorage.getItem('token')
   const navigate = useNavigate()
+  const {user} = useSelector(state => state.auth)
 
   const {id} = useParams()
 
@@ -24,6 +26,7 @@ export default function QuizPlay({ onQuizComplete }) {
                 if(response.ok){
                     const result =  await response.json()
                     setActiveQuiz(result)
+                    console.log(result)
                 }
             }catch(error){
                 console.error(error);
@@ -31,9 +34,30 @@ export default function QuizPlay({ onQuizComplete }) {
         }
 
         getQuiz(id)
-  },[id])
+  },[id,token])
 
-  
+
+  const submitScore = async(score) => {
+    try{
+        const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/v1/quiz/submit`,{
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              "quizId": activeQuiz.id,
+              "score": score,
+              "userId": user.id
+            })
+        });
+        if (response.ok) {
+            console.log('Score submitted successfully');
+        }
+    } catch (error) {
+        console.error('Error submitting score:', error);
+    }
+};
 
   const currentQuestion = activeQuiz?.questions[currentIdx];
   const totalQuestions = activeQuiz?.questions.length;
@@ -56,7 +80,8 @@ export default function QuizPlay({ onQuizComplete }) {
       setHasChecked(false);
     } else {
       setQuizFinished(true);
-      if (onQuizComplete) onQuizComplete({ score: correctCount * 5 });
+      const score = correctCount * 5;
+      submitScore(score);
     }
   };
 
@@ -69,6 +94,8 @@ export default function QuizPlay({ onQuizComplete }) {
     let colorClass = "text-rose-500";
     if (correctCount >= 5 && correctCount <= 10) colorClass = "text-amber-500";
     if (correctCount > 10) colorClass = "text-emerald-500";
+
+    
 
     return (
       <div className="min-h-screen  bg-slate-50 flex items-center justify-center p-4">
@@ -96,7 +123,7 @@ export default function QuizPlay({ onQuizComplete }) {
             {correctCount > 10 ? "Excellent work, Scholar!" : correctCount >= 5 ? "Good effort, keep practicing!" : "Don't give up, try again!"}
           </p>
           
-          <button onClick={() => navigate('/quizes')} className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition shadow-sm">
+          <button onClick={() => navigate('/quizes')} className=" cursor-pointer w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition shadow-sm">
             Back to Dashboard
           </button>
         </div>
@@ -203,7 +230,7 @@ export default function QuizPlay({ onQuizComplete }) {
               <button
                 onClick={handleCheckAnswer}
                 disabled={selectedAnswerId === null}
-                className={`px-6 py-2.5 text-sm font-bold rounded-xl transition-all ${
+                className={`cursor-pointer px-6 py-2.5 text-sm font-bold rounded-xl transition-all ${
                   selectedAnswerId === null
                     ? "bg-slate-200 text-slate-400 cursor-not-allowed"
                     : "bg-blue-600 text-white hover:bg-blue-700 shadow-xs shadow-blue-200"
@@ -211,10 +238,10 @@ export default function QuizPlay({ onQuizComplete }) {
               >
                 Confirm Choice
               </button>
-            ) : (
+            ) :  (
               <button
                 onClick={handleNextQuestion}
-                className="px-6 py-2.5 bg-slate-800 text-white text-sm font-bold rounded-xl hover:bg-slate-900 transition-all shadow-xs"
+                className="cursor-pointer px-6 py-2.5 bg-slate-800 c text-white text-sm font-bold rounded-xl hover:bg-slate-900 transition-all shadow-xs"
               >
                 {currentIdx + 1 === totalQuestions ? "See Summary" : "Next Question →"}
               </button>

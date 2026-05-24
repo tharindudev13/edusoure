@@ -1,13 +1,13 @@
+import { Trophy } from "lucide-react";
+
 const LeaderBoard = ({leaderboard}) => {
     return (
         <>
         
-        <div className="bg-white border border-slate-200 rounded-2xl p-6 h-fit shadow-sm">
           <div className="flex items-center gap-3 mb-6">
-            <span className="text-2xl">🏆</span>
+            <Trophy />
             <div>
               <h2 className="text-xl font-bold text-slate-800">Leaderboard</h2>
-              <p className="text-xs text-slate-400">All-time top performing students</p>
             </div>
           </div>
 
@@ -81,7 +81,6 @@ const LeaderBoard = ({leaderboard}) => {
               Complete more quizzes to boost your overall platform rank!
             </p>
           </div>
-        </div>
         </>
     )
 
