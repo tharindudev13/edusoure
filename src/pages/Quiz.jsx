@@ -12,6 +12,13 @@ export default function QuizDashboard() {
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
 
+  useEffect(() => {
+    document.title = "EduSource Quiz Portal";
+    if (!token) {
+      navigate("/login");
+    }
+  }, [token]);
+
   const subjects = [
     { id: "sub_1", name: "Combined Maths", symbol: "∑", gradient: "from-blue-500 to-indigo-600" },
     { id: "sub_2", name: "Physics", symbol: "⚛️", gradient: "from-purple-500 to-blue-600" },
