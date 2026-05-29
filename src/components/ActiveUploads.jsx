@@ -1,19 +1,15 @@
 import { useEffect, useState } from "react"
-import { useSelector } from "react-redux"
 import MaterialCard from "./FileCard"
 import { FileText } from "lucide-react"
 
 const ActiveUploads = ({id}) => {
 
     const[myUploads,setMyUploads] = useState([])
-    const {user} = useSelector((state) => state.auth);
     const token = localStorage.getItem('token')
 
     useEffect(() => {
         const fetchMyUploads = async () =>{
-            try{
-                console.log(user.name);
-                
+            try{                
                 const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/v1/material/active-uploads/${id}`, {
                     headers: {
                         "Authorization": `Bearer ${token}`

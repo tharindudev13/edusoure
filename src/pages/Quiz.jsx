@@ -190,7 +190,7 @@ export default function QuizDashboard() {
                       >
                         <div className="space-y-1">
                           <span className="inline-flex items-center px-2 py-0.5 bg-slate-100 text-slate-600 text-xs font-bold rounded-md tracking-wide ">
-                            15 Questions
+                            {quiz.questions.length} Questions
                           </span>
                           <h4 className="font-bold text-lg text-slate-800 group-hover:text-blue-600 transition-colors">
                             {quiz.topic}

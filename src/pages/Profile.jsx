@@ -125,7 +125,7 @@ const ProfilePage = () => {
             <TeacherRating id={id}/>
         )}
 
-        {isTeacher && <RequestClassNav />}
+        {isTeacher && userDetails.id === user?.id && <RequestClassNav />}
 
 
         {/* Conditional Teacher Classes Section */}
