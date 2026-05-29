@@ -189,9 +189,6 @@ export default function QuizDashboard() {
                         className="p-5 rounded-2xl bg-white border border-slate-200/70 hover:border-blue-400 shadow-sm hover:shadow-md transition-all duration-200 flex flex-col sm:flex-row justify-between sm:items-center gap-4 group"
                       >
                         <div className="space-y-1">
-                          <span className="inline-flex items-center px-2 py-0.5 bg-slate-100 text-slate-600 text-xs font-bold rounded-md tracking-wide ">
-                            {quiz.questions.length} Questions
-                          </span>
                           <h4 className="font-bold text-lg text-slate-800 group-hover:text-blue-600 transition-colors">
                             {quiz.topic}
                           </h4>
