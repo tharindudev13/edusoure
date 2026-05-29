@@ -157,15 +157,19 @@ const RequestClassForm = () => {
                   </div>
                   <div>
                     <p className="opacity-70">Account Number</p>
-                    <p className="font-medium tracking-wider">8123 4567 8901</p>
+                    <p className="font-medium tracking-wider">0094635403</p>
+                  </div>
+                  <div>
+                    <p className="opacity-70">Account Holder</p>
+                    <p className="font-medium tracking-wider">K H Jayawardhane</p>
                   </div>
                   <div>
                     <p className="opacity-70">Amount</p>
-                    <p className="font-bold text-lg">LKR 1,500.00</p>
+                    <p className="font-bold text-lg">LKR 900.00/month</p>
                   </div>
                   <div>
                     <p className="opacity-70">Remarks</p>
-                    <p className="font-medium underline decoration-blue-300">REQ_CLASS_[YOUR_NAME]</p>
+                    <p className="font-medium text-[0.55rem] underline decoration-blue-300">[SUBJECT]_[ACADEMIC_YEAR]_[YOUR_NAME]_[MONTH]</p>
                   </div>
                 </div>
               </div>
