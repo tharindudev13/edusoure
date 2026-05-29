@@ -26,7 +26,6 @@ export default function QuizPlay() {
                 if(response.ok){
                     const result =  await response.json()
                     setActiveQuiz(result)
-                    console.log(result)
                 }
             }catch(error){
                 console.error(error);
@@ -65,9 +64,7 @@ export default function QuizPlay() {
   const handleCheckAnswer = () => {
     if (selectedAnswerId === null || hasChecked) return;
     const chosenAnswer = currentQuestion.answers.find(ans => ans.answerId === selectedAnswerId);
-    if (chosenAnswer?.correct) {
-        console.log(chosenAnswer.correct);
-        
+    if (chosenAnswer?.correct) {        
       setCorrectCount(prev => prev + 1);
     }
     setHasChecked(true);

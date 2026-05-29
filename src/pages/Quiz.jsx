@@ -57,7 +57,6 @@ export default function QuizDashboard() {
       });
       const quizData = await quizRes.json();
       setQuizzes(quizData);
-      console.log(quizData);
       
       // 2. Fetch specific subject leaderboard ranking metrics
       const lbRes = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/v1/quiz/leaderboard/${subjectName}`, {
