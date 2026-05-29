@@ -36,6 +36,8 @@ const RegisterPage = () => {
   const [heading,setHeading] = useState("")
   const [messege,setMessege] = useState("")
   const [type,setType] = useState("")
+  const [isValid,setIsValid] = useState(true)
+  const [msg,setMsg] = useState("")
 
   const navigate = useNavigate()
 
@@ -44,6 +46,28 @@ const RegisterPage = () => {
       prev.includes(sub) ? prev.filter((item) => item !== sub) : [...prev, sub]
     );
   };
+
+  const handleEmailChange = async(e) => {
+    const value = e.target.value;
+    setEmail(value);
+    if(value.includes("@") && value.includes(".")){
+      try {
+        const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/v1/users/checkemail/${value}`);
+        const data = await response.json();
+        setIsValid(data);
+        if(data){
+          setMsg("Email is valid")
+        }else{
+          setMsg("This email is already in use!")
+        }
+      } catch (error) {
+        console.error("Error checking email:", error);
+      }
+    }else{
+      setIsValid(false)
+      setMsg("Please enter a valid email address")
+    }
+  }
 
   const createUser = async() => {
     const formData = new FormData()
@@ -266,10 +290,11 @@ const RegisterPage = () => {
             <div className="space-y-6">
               <h3 className="text-2xl font-bold text-slate-800">Security Credentials</h3>
               <div className="space-y-4">
-                <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email Address" className="w-full p-3 rounded-xl border border-slate-200 outline-none focus:border-blue-500" />
+                {isValid ? <Alert message={msg} type={"success"}/> : <Alert message={msg} type={"error"}/>}
+                <input type="email" required value={email} onChange={(e) => handleEmailChange(e)} placeholder="Email Address" className="w-full p-3 rounded-xl border border-slate-200 outline-none focus:border-blue-500" />
                 <input type="password" required value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" className="w-full p-3 rounded-xl border border-slate-200 outline-none focus:border-blue-500" />
                 
-                {password !== confirmPassword && <Alert message={"Passwords are not matching!"}/>}
+                {password !== confirmPassword ? <Alert type="error" message={"Passwords are not matching!"}/> : <Alert type="success" message={"Passwords are matching!"}/>}
                 <div className="relative flex items-center">
                 <input type={showPassword ? "text" : "password"} required value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} placeholder="Confirm Password" className="w-full p-3 rounded-xl border border-slate-200 outline-none focus:border-blue-500" />
                 <button
@@ -301,7 +326,7 @@ const RegisterPage = () => {
                   Continue <ChevronRight className="w-5 h-5" />
                 </button>
               ) : (
-                <button onClick={createUser} disabled={password !== confirmPassword} className="cursor-pointer px-10 py-3 bg-green-600 text-white font-bold rounded-xl shadow-lg hover:bg-green-700 transition-all">
+                <button onClick={createUser} disabled={password !== confirmPassword || !isValid} className="cursor-pointer px-10 py-3 bg-green-600 text-white font-bold rounded-xl shadow-lg hover:bg-green-700 transition-all">
                   Register Now
                 </button>
               )}
