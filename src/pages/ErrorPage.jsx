@@ -33,7 +33,6 @@ const ErrorPage = () => {
             };
         }
 
-        // 2. Handle Network Errors
         if (err?.message === "Failed to fetch") {
             return {
                 title: "Connection Lost",
@@ -42,7 +41,6 @@ const ErrorPage = () => {
             };
         }
 
-        // 3. Fallback for Runtime Errors (like the 'profile_pic' undefined error)
         return {
             title: "Something Went Wrong",
             message: "We encountered an unexpected error. Refreshing the page might help.",

@@ -28,6 +28,10 @@ export default function QuizDashboard() {
     {id:"sub_6", name: "Accounting", symbol: "📊", gradient: "from-yellow-400 to-yellow-600"},
     {id:"sub_7", name: "Economics", symbol: "📈", gradient: "from-orange-400 to-orange-600"},
     {id:"sub_8", name:  "Business Studies", symbol: "🏢", gradient: "from-red-400 to-red-600"},
+    {id:"sub_9", name:  "Science for Technology", symbol: "🔬", gradient: "from-cyan-400 to-cyan-600"},
+    {id:"sub_10", name:  "Engineering Technology", symbol: "⚙️", gradient: "from-gray-400 to-gray-600"},
+    {id:"sub_11", name:  "Bio Systems Technology", symbol: "🌵", gradient: "from-green-400 to-green-600"},
+
   ];
 
   // Fetch Global Leaderboard on initial load

@@ -1,7 +1,25 @@
 import { Outlet } from "react-router"
 import NavBar from "../components/Navbar"
+import GoToLogin from "../pages/GoToLogin"
+import { useEffect } from "react"
 
 const RootLayout = () => {
+
+    const token = localStorage.getItem('token')
+
+    useEffect(() => {{
+      setTimeout(() => {
+        localStorage.removeItem('token')
+        localStorage.removeItem('user')
+        window.location.href = '/login'
+      }, 1000 * 60 * 60 * 24) 
+    }})
+
+    if(!token){
+        return(
+            <GoToLogin />
+        )
+    }   
 
     return(
         <>
