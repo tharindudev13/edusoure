@@ -43,7 +43,8 @@ const authSlice = createSlice({
                     email: action.payload.email,
                     id: action.payload.id,
                     roles: action.payload.roles,
-                    name: action.payload.name
+                    name: action.payload.name,
+                    profilePic: action.payload.pic
             }
             state.user = userData
 

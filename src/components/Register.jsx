@@ -19,7 +19,7 @@ const RegisterPage = () => {
   const togglePasswordVisibility = () => setShowPassword(prev => !prev);
 
   const [profilePicPreview, setProfilePicPreview] = useState();
-  const [profilePicFile, setProfilePicFile] = useState();
+  const [profilePicFile, setProfilePicFile] = useState("");
   const [name, setName] = useState("");
   const [school,setSchool] = useState("");
   const [phone,setPhone] = useState("");

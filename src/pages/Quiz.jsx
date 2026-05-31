@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import LeaderBoard from "../components/Leaderboard";
 import { useNavigate } from "react-router";
 import { ChartNoAxesGanttIcon, Globe} from "lucide-react";
+import { useSelector } from "react-redux";
+import SuccessModal from "../components/FeedBack";
 
 export default function QuizDashboard() {
   const [selectedSubject, setSelectedSubject] = useState(null);
@@ -11,6 +13,9 @@ export default function QuizDashboard() {
   const [loadingQuizzes, setLoadingQuizzes] = useState(false);
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
+  const {user} = useSelector((state) => state.auth);
+  const isTeacher = user?.roles?.includes("ROLE_TEACHER");
+
 
   useEffect(() => {
     document.title = "EduSource Quiz Portal";
@@ -25,12 +30,12 @@ export default function QuizDashboard() {
     { id: "sub_3", name: "Chemistry", symbol: "🧪", gradient: "from-teal-400 to-emerald-600" },
     { id: "sub_4", name: "ICT", symbol: "💻", gradient: "from-cyan-500 to-blue-500" },
     { id: "sub_5", name: "Biology", symbol: "🧬", gradient: "from-green-400 to-green-600" },
-    {id:"sub_6", name: "Accounting", symbol: "📊", gradient: "from-yellow-400 to-yellow-600"},
-    {id:"sub_7", name: "Economics", symbol: "📈", gradient: "from-orange-400 to-orange-600"},
-    {id:"sub_8", name:  "Business Studies", symbol: "🏢", gradient: "from-red-400 to-red-600"},
-    {id:"sub_9", name:  "Science for Technology", symbol: "🔬", gradient: "from-cyan-400 to-cyan-600"},
-    {id:"sub_10", name:  "Engineering Technology", symbol: "⚙️", gradient: "from-gray-400 to-gray-600"},
-    {id:"sub_11", name:  "Bio Systems Technology", symbol: "🌵", gradient: "from-green-400 to-green-600"},
+    { id:"sub_6", name: "Accounting", symbol: "📊", gradient: "from-yellow-400 to-yellow-600"},
+    { id:"sub_7", name: "Economics", symbol: "📈", gradient: "from-orange-400 to-orange-600"},
+    { id:"sub_8", name:  "Business Studies", symbol: "🏢", gradient: "from-red-400 to-red-600"},
+    { id:"sub_9", name:  "Science for Technology", symbol: "🔬", gradient: "from-cyan-400 to-cyan-600"},
+    { id:"sub_10", name:  "Engineering Technology", symbol: "⚙️", gradient: "from-gray-400 to-gray-600"},
+    { id:"sub_11", name:  "Bio Systems Technology", symbol: "🌵", gradient: "from-green-400 to-green-600"},
 
   ];
 
@@ -80,6 +85,19 @@ export default function QuizDashboard() {
     setQuizzes([]);
     setSubjectLeaderboard([]);
   };
+
+  if(isTeacher){
+        return(
+            <SuccessModal 
+                isOpen={true} 
+                onClose={() => navigate(-1)} 
+                button_text={"Back"}
+                heading={"Access Denied"}
+                messege={"Quizzes are only allowed to sudents...."}
+                type={'error'}
+    />
+        )
+    }
 
   return (
     <div className="min-h-screen bg-linear-to-b from-slate-50 to-slate-100/50 text-slate-800 p-4 md:p-10 antialiased">

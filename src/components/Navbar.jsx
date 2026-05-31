@@ -10,6 +10,8 @@ const NavBar = () => {
   const { token, user } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const [active,setActive] = useState(false)
+  const isTeacher = user?.roles?.includes("ROLE_TEACHER");
+
 
   const DEFAULT_AVATAR = `https://ui-avatars.com/api/?name=${encodeURIComponent(
     user?.name || "User"
@@ -46,7 +48,9 @@ const NavBar = () => {
             <NavLink to="/" className={desktopLinkClass}>Home</NavLink>
             <NavLink to="/classes" className={desktopLinkClass}>Classes</NavLink>
             <NavLink to="/materials" className={desktopLinkClass}>Study Materials</NavLink>
-            <NavLink to="/quizes" className={desktopLinkClass}>Quizes</NavLink>
+            {!isTeacher && 
+              <NavLink to="/quizes" className={desktopLinkClass}>Quizes</NavLink>
+            }
           </div>
 
           {/* Right Side: Auth / Profile Section */}
@@ -98,10 +102,12 @@ const NavBar = () => {
           <span className="text-[10px] font-bold uppercase tracking-wider">Materials</span>
         </NavLink>
 
-        <NavLink to="/quizes" className={mobileLinkClass}>
-          <CircleQuestionMark size={22} />
-          <span className="text-[10px] font-bold uppercase tracking-wider">Quizes</span>
-        </NavLink>
+        {!isTeacher && (
+          <NavLink to="/quizes" className={mobileLinkClass}>
+            <CircleQuestionMark size={22} />
+            <span className="text-[10px] font-bold uppercase tracking-wider">Quizes</span>
+          </NavLink>
+        )}
 
         {/* Mobile-only interactive action for Logout if token exists */}
         {token && (

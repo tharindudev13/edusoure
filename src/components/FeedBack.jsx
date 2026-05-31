@@ -1,4 +1,4 @@
-import { CheckCircle2, CircleAlert, CircleQuestionMark} from "lucide-react";
+import { CheckCircle2,CircleQuestionMark, ShieldAlert} from "lucide-react";
 
 const SuccessModal = ({ isOpen, onClose ,type,messege,heading,button_text,onCancel}) => {
   if (!isOpen) return null;
@@ -15,7 +15,7 @@ const SuccessModal = ({ isOpen, onClose ,type,messege,heading,button_text,onCanc
                 </div>
             ) : type === 'error' ? (
                 <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mb-4">
-                    <CircleAlert size={48} className="text-red-500" />
+                    <ShieldAlert size={48} className="text-red-500" />
                 </div>
             ) : <div className="w-20 h-20 bg-yellow-100 rounded-full flex items-center justify-center mb-4">
                     <CircleQuestionMark size={48} className="text-yellow-500" />

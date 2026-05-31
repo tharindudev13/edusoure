@@ -19,7 +19,7 @@ const RecentMaterials = () => {
             })
                 if(response.ok){
                     const result = await response.json()
-                    setRecents(result)
+                    setRecents(result.slice(0,6))
                 }
             }catch(error){
                 console.log(error);
@@ -30,6 +30,8 @@ const RecentMaterials = () => {
         fetchRecentmaterials()
 
     },[])
+
+     
 
     
 
