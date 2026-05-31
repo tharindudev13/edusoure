@@ -25,6 +25,10 @@ const FileUpload = () => {
                       "Business Studies",
                       "Economics",
                       "English",
+                      "Biology",
+                      "Bio Systems Technology",
+                      "Engineering Technology",
+                      "Science for Technology",
                       "Other"
                     ]
 

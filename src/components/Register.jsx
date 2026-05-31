@@ -298,7 +298,7 @@ const RegisterPage = () => {
                 <div className="relative flex items-center">
                 <input type={showPassword ? "text" : "password"} required value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} placeholder="Confirm Password" className="w-full p-3 rounded-xl border border-slate-200 outline-none focus:border-blue-500" />
                 <button
-                  type="button" // CRITICAL: Keeps the button from accidentally submitting your form
+                  type="button" 
                   onClick={togglePasswordVisibility}
                   className="absolute right-3 text-slate-400 hover:text-slate-600 transition-colors focus:outline-none cursor-pointer"
                   aria-label={showPassword ? "Hide password" : "Show password"}
