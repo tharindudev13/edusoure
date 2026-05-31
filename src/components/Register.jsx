@@ -20,7 +20,7 @@ const RegisterPage = () => {
 
   const [profilePicPreview, setProfilePicPreview] = useState();
   const [profilePicFile, setProfilePicFile] = useState("");
-  const [name, setName] = useState("");
+  const [name, setName] = useState("User");
   const [school,setSchool] = useState("");
   const [phone,setPhone] = useState("");
   const [address,setAddress] = useState("");
@@ -92,6 +92,8 @@ const RegisterPage = () => {
 
     try{
       setLoading(true)
+      console.log([...formData])
+      
       const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/v1/users/create`,{
                 method: "POST",
                 body: formData

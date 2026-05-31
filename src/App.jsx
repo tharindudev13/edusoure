@@ -12,6 +12,8 @@ import RequestClassForm from "./pages/RequestClass";
 // import ComingSoon from "./pages/ComingSoon";
 import QuizEngine from "./pages/Quiz";
 import QuizPlay from "./components/QuizPlay";
+import AboutUs from "./pages/AboutUs";
+import PrivacyPolicy from "./pages/Privacy";
 
 function App() {
 
@@ -29,6 +31,8 @@ function App() {
         <Route path="/request-class" element={<RequestClassForm />} />
         <Route path="/quizes" element={<QuizEngine />} />
         <Route path="/quiz/:id" element={<QuizPlay />} />
+        <Route path="/about" element={<AboutUs />} />
+        <Route path="/privacy" element={<PrivacyPolicy />} />
       </Route>
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />

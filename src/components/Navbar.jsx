@@ -1,17 +1,19 @@
-import { LogIn, LogOut, Home, BookOpen, FileText, CircleQuestionMark } from "lucide-react";
+import { LogIn, LogOut, Home, BookOpen, FileText, HelpCircle, User } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../features/authSlice";
 import { Link, NavLink, useNavigate } from "react-router";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import SuccessModal from "./FeedBack";
 
 const NavBar = () => {
   const dispatch = useDispatch();
   const { token, user } = useSelector((state) => state.auth);
   const navigate = useNavigate();
-  const [active,setActive] = useState(false)
+  const [active, setActive] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
+  
   const isTeacher = user?.roles?.includes("ROLE_TEACHER");
-
 
   const DEFAULT_AVATAR = `https://ui-avatars.com/api/?name=${encodeURIComponent(
     user?.name || "User"
@@ -19,12 +21,26 @@ const NavBar = () => {
 
   const [avatarSrc, setAvatarSrc] = useState(user?.profilePic || DEFAULT_AVATAR);
 
+  // Sync state if user data loads later asynchronously
+  
+
+  // Click outside listener hook to auto-close profile menu dropdown safely
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   const handleLogout = () => {
+    setDropdownOpen(false);
     dispatch(logout());
     navigate("/login");
   };
 
-  // Helper class for mobile nav links to keep code clean
   const mobileLinkClass = ({ isActive }) =>
     `flex flex-col items-center justify-center flex-1 h-full gap-1 transition-colors ${
       isActive ? "text-blue-600" : "text-slate-500 hover:text-blue-600"
@@ -56,16 +72,78 @@ const NavBar = () => {
           {/* Right Side: Auth / Profile Section */}
           <div className="flex items-center gap-4">
             {token ? (
-              <div className="flex items-center gap-3">
-                {/* User Avatar with error fallback */}
-                <img
-                  src={avatarSrc}
-                  alt="Profile"
-                  onError={() => avatarSrc !== DEFAULT_AVATAR && setAvatarSrc(DEFAULT_AVATAR)}
-                  className="w-9 h-9 rounded-full object-cover border border-slate-200 cursor-pointer"
-                  onClick={() => navigate(`/myprofile/${user?.id}/${user?.name}`)}
-                />
-                {/* Logout Button (Hidden on tiny mobile screens to save space) */}
+              <div className="flex items-center gap-3 relative" ref={dropdownRef}>
+                
+                {/* User Avatar Action Node */}
+                <div className="relative">
+                  <img
+                    src={avatarSrc}
+                    alt="Profile"
+                    onError={() => avatarSrc !== DEFAULT_AVATAR && setAvatarSrc(DEFAULT_AVATAR)}
+                    className={`w-9 h-9 rounded-full object-cover border cursor-pointer transition-all ${
+                      dropdownOpen ? "border-blue-600 ring-2 ring-blue-100" : "border-slate-200 hover:border-slate-400"
+                    }`}
+                    onClick={() => setDropdownOpen(!dropdownOpen)}
+                  />
+
+                  {/* --- DYNAMIC CUSTOM USER PROFILE MENU DROPDOWN --- */}
+                  {/* --- DYNAMIC CUSTOM USER PROFILE MENU DROPDOWN --- */}
+{dropdownOpen && (
+  <div className="absolute right-0 mt-2.5 w-52 bg-white border border-slate-200 rounded-xl shadow-xl p-1.5 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
+    {/* Header Info */}
+    <div className="px-3 py-2 border-b border-slate-100 mb-1">
+      <p className="text-[10px] font-mono text-slate-400 font-bold tracking-wider uppercase">User Account</p>
+      <p className="text-sm text-slate-800 font-black truncate max-w-[180px] mt-0.5">{user?.name || "EduSource User"}</p>
+    </div>
+
+    {/* Dropdown Options */}
+    <button
+      onClick={() => {
+        setDropdownOpen(false);
+        navigate(`/myprofile/${user?.id}/${user?.name}`);
+      }}
+      className="w-full flex items-center gap-2.5 px-3 py-2 text-xs font-bold text-slate-600 hover:bg-slate-50 hover:text-blue-600 rounded-lg transition-colors text-left"
+    >
+      <User size={15} className="text-slate-400 group-hover:text-blue-600" /> My Profile
+    </button>
+
+    <button
+      onClick={() => {
+        setDropdownOpen(false);
+        navigate("/about");
+      }}
+      className="w-full flex items-center gap-2.5 px-3 py-2 text-xs font-bold text-slate-600 hover:bg-slate-50 hover:text-blue-600 rounded-lg transition-colors text-left"
+    >
+      <HelpCircle size={15} className="text-slate-400" /> About Us
+    </button>
+
+    <button
+      onClick={() => {
+        setDropdownOpen(false);
+        navigate("/privacy");
+      }}
+      className="w-full flex items-center gap-2.5 px-3 py-2 text-xs font-bold text-slate-600 hover:bg-slate-50 hover:text-blue-600 rounded-lg transition-colors text-left"
+    >
+      <FileText size={15} className="text-slate-400" /> Privacy Policy
+    </button>
+
+    <div className="h-px bg-slate-100 my-1" />
+
+    {/* Logout Execution Action */}
+    <button
+      onClick={() => {
+        setDropdownOpen(false);
+        setActive(true);
+      }}
+      className="w-full flex items-center gap-2.5 px-3 py-2 text-xs font-bold text-red-500 hover:bg-red-50 rounded-lg transition-colors text-left"
+    >
+      <LogOut size={15} /> Logout
+    </button>
+  </div>
+)}
+                </div>
+
+                {/* Desktop Logout Button (Hidden on tiny mobile viewports) */}
                 <button
                   onClick={() => setActive(true)}
                   className="hidden sm:flex items-center gap-2 px-3 py-2 text-red-500 font-bold text-sm hover:bg-red-50 rounded-lg transition-all cursor-pointer"
@@ -85,8 +163,8 @@ const NavBar = () => {
         </div>
       </nav>
 
-      {/* --- BOTTOM MOBILE NAVIGATION BAR (Facebook-Style / Hidden on Desktop) --- */}
-      <div className="md:hidden fixed bottom-0 mt-10 left-0 right-0 bg-white border-t border-slate-200 h-16 z-50 px-2 flex items-center justify-around shadow-[0_-2px_10px_rgba(0,0,0,0.05)]">
+      {/* --- BOTTOM MOBILE NAVIGATION BAR --- */}
+      <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 h-16 z-50 px-2 flex items-center justify-around shadow-[0_-2px_10px_rgba(0,0,0,0.05)]">
         <NavLink to="/" className={mobileLinkClass}>
           <Home size={22} />
           <span className="text-[10px] font-bold uppercase tracking-wider">Home</span>
@@ -104,12 +182,12 @@ const NavBar = () => {
 
         {!isTeacher && (
           <NavLink to="/quizes" className={mobileLinkClass}>
-            <CircleQuestionMark size={22} />
+            {/* Swapped custom error icon to standard Lucide FileText configuration mapping */}
+            <FileText size={22} />
             <span className="text-[10px] font-bold uppercase tracking-wider">Quizes</span>
           </NavLink>
         )}
 
-        {/* Mobile-only interactive action for Logout if token exists */}
         {token && (
           <button
             onClick={() => setActive(true)}
@@ -121,14 +199,14 @@ const NavBar = () => {
         )}
       </div>
       
-      {/* Visual buffer element so absolute content at the bottom of pages doesn't get hidden behind the mobile navbar */}
+      {/* Visual layout footer buffer */}
       <div className="h-16 md:hidden" />
 
       <SuccessModal 
         isOpen={active}
         onClose={() => {
-          handleLogout()
-          setActive(false)
+          handleLogout();
+          setActive(false);
         }}
         type="warning"
         heading="Are you sure you want to logout?"
