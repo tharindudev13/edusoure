@@ -14,6 +14,7 @@ import QuizEngine from "./pages/Quiz";
 import QuizPlay from "./components/QuizPlay";
 import AboutUs from "./pages/AboutUs";
 import PrivacyPolicy from "./pages/Privacy";
+import SettingsPage from "./pages/Settings";
 
 function App() {
 
@@ -33,6 +34,7 @@ function App() {
         <Route path="/quiz/:id" element={<QuizPlay />} />
         <Route path="/about" element={<AboutUs />} />
         <Route path="/privacy" element={<PrivacyPolicy />} />
+        <Route path="/settings" element={<SettingsPage />} />
       </Route>
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />

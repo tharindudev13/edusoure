@@ -11,8 +11,8 @@ const RequestClassForm = () => {
     const[subject,setSubject] = useState('')
     const[year,setYear] = useState(new Date().getFullYear())
     const[desc,setDesc] = useState('')
-    const[mode,setMode] = useState('Select')
-    const[locations,setLocations] = useState('')
+    const[mode,setMode] = useState('Physical')
+    const[locations,setLocations] = useState([])
     const[thumbFile,setThumbFile] = useState()
     const[pay,setPay] = useState()
     const[duration,setDuration] = useState('')
@@ -37,6 +37,7 @@ const RequestClassForm = () => {
     const isTeacher = user?.roles?.includes("ROLE_TEACHER");
     const navigate = useNavigate()
 
+    const districts = ["Colombo","Gampaha","Kalutara","Kandy","Matale","Nuwara Eliya","Galle","Matara","Hambantota","Jaffna","Kilinochchi","Mannar","Vavuniya","Mullaitivu","Batticaloa","Ampara","Trincomalee","Kurunegala","Puttalam","Anuradhapura","Polonnaruwa","Badulla","Monaragala","Ratnapura","Kegalle"]
 
   
     useEffect(() => {{
@@ -67,7 +68,7 @@ const RequestClassForm = () => {
             mode: mode,
             duration: duration,
             lms: lms,
-            locations: locations.split(',').map(l => l.trim()),
+            locations: locations,
             hotline: hotline,
             desc: desc
         }
@@ -212,11 +213,48 @@ const RequestClassForm = () => {
                   </select>
                 </div>
                 <div>
-                  <label className="text-xs font-bold text-slate-400 uppercase ml-1">Location(s)</label>
-                  <input required type="text" value={locations} onChange={(e) => setLocations(e.target.value)} placeholder="e.g. Colombo, Galle" className="w-full mt-1 p-3 bg-slate-50 border-none rounded-xl text-sm focus:ring-2 focus:ring-blue-500 outline-none" />
+                  <label className="text-xs font-bold text-slate-400 uppercase ml-1">District(s)</label>
+                  <select 
+                      value="" // Keep this blank so the select resets after each click
+                      onChange={(e) => {
+                        const selectedValue = e.target.value;
+                        if (selectedValue && !locations.includes(selectedValue)) {
+                          // Functional update to copy old locations list and append the new selection
+                          setLocations((prevLocations) => [...prevLocations, selectedValue]);
+                        }
+                      }} 
+                      className="w-full mt-1 p-3 bg-slate-50 border-none rounded-xl text-sm outline-none"
+                    >
+                      {districts.map((district) => (
+                        <option key={district} value={district}>{district}</option>
+                      ))}
+                    </select>
                 </div>
+                {/* Render added districts tags */}
+                {locations.length > 0 && (
+                  <div className="flex flex-wrap gap-2 mt-3">
+                    {locations.map((district) => (
+                      <span 
+                        key={district} 
+                        className="flex items-center gap-1.5 bg-blue-50 text-blue-600 text-xs font-bold px-3 py-1.5 rounded-lg border border-blue-100"
+                      >
+                        {district}
+                        <button
+                          type="button"
+                          onClick={() => {
+                            // Filter out the district to remove it from the list
+                            setLocations(locations.filter(loc => loc !== district));
+                          }}
+                          className="cursor-pointer text-blue-400 hover:text-blue-600 font-extrabold ml-1 outline-none"
+                        >
+                          &times;
+                        </button>
+                      </span>
+                    ))}
+                  </div>
+                )}
                 <div>
-                  <label className="text-xs font-bold text-slate-400 uppercase ml-1">lms link(If available)</label>
+                  <label className="text-xs font-bold text-slate-400 uppercase ml-1">LMS Link (If available)</label>
                   <input required type="text" value={lms} onChange={(e) => setLms(e.target.value)} placeholder="e.g. www.onlineclass.lk" className="w-full mt-1 p-3 bg-slate-50 border-none rounded-xl text-sm focus:ring-2 focus:ring-blue-500 outline-none" />
                 </div>
               </div>

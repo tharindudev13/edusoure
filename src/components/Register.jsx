@@ -49,7 +49,7 @@ const RegisterPage = () => {
 
   const handleEmailChange = async(e) => {
     const value = e.target.value;
-    setEmail(value);
+    setEmail(value);    
     if(value.includes("@") && value.includes(".")){
       try {
         const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/v1/users/checkemail/${value}`);

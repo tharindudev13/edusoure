@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { decode } from "../features/encode"
 
 const TeacherRating = ({id}) => {
 
@@ -8,7 +9,7 @@ const TeacherRating = ({id}) => {
     useEffect(() => {
         const fetchRatings = async(id) => {
             try{
-                const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/v1/teachers/getratings/${id}`,{
+                const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/v1/teachers/getratings/${decode(id)}`,{
                     method : "GET",
                     headers:{
                         "Authorization" : `Bearer ${token}`

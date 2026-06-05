@@ -1,6 +1,7 @@
 import { User } from "lucide-react"
 import { useState,useEffect } from "react"
 import { Link } from "react-router"
+import { encode } from "../features/encode"
 
 const Teacher = ({ name,id }) => {
     const token = localStorage.getItem('token')
@@ -17,7 +18,7 @@ const Teacher = ({ name,id }) => {
             })
             if(response.ok){
                 const result = await response.text()
-                setTchId(result)
+                setTchId(encode(result))
             }
             }catch(error){
             console.log(error);

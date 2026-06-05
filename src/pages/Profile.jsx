@@ -10,6 +10,7 @@ import MyClasses from '../components/MyClasses';
 import ActiveClasses from '../components/ActiveClasses';
 import MyUploads from '../components/MyUploads';
 import ActiveUploads from '../components/ActiveUploads';
+import { decode } from '../features/encode';
 
 const ProfilePage = () => {
   const { user } = useSelector((state) => state.auth);
@@ -19,6 +20,7 @@ const ProfilePage = () => {
 
   const {id} = useParams()
 
+
   useEffect(() => {{
       document.title = "Profile | EduSource"
     }})
@@ -26,7 +28,7 @@ const ProfilePage = () => {
   useEffect(() =>{
       const fetchUserDetails = async (id)=>{
         try{
-          const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/v1/users/getuser/${id}`,{
+          const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/v1/users/getuser/${decode(id)}`,{
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}` 
@@ -118,7 +120,7 @@ const ProfilePage = () => {
             </div>
           </div>
 
-          <Subjects id={id} isTeacher={isTeacher} />
+          <Subjects id={decode(id)} isTeacher={isTeacher} />
         </div>
 
         {isTeacher &&  (
@@ -134,7 +136,7 @@ const ProfilePage = () => {
           userDetails.id === user?.id ? (
             <MyClasses />
           ) : (
-            <ActiveClasses id={userDetails?.id} />
+            <ActiveClasses id={decode(id)} />
           )
         )}
         
@@ -142,7 +144,7 @@ const ProfilePage = () => {
         {/* Uploaded Materials Section */}
         {(userDetails.id === user?.id) ?(
             <MyUploads />
-        ) : <ActiveUploads id={userDetails?.id} />}
+        ) : <ActiveUploads id={decode(id)} />}
       </div>
     </div>
         )

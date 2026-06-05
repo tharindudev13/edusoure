@@ -8,6 +8,10 @@ const MaterialsPage = () => {
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState("");
 
+    const [filterSubject, setFilterSubject] = useState("");
+    const [filterType, setFilterType] = useState("");
+    
+
     useEffect(() => {{
       document.title = "Materials | EduSource"
     }})
@@ -35,15 +39,33 @@ const MaterialsPage = () => {
 
     
 
-    
+    const uniqueSubjects = useMemo(() => {
+        return [...new Set(materials.map(m => m.subject).filter(Boolean))];
+    }, [materials]);
 
-    // Logic to filter and then group materials by subject
+     const uniqueTypes = useMemo(() => {
+        return [...new Set(materials.map(m => m.type).filter(Boolean))];
+    }, [materials]);
+
     const groupedMats = useMemo(() => {
-        const filtered = materials.filter(mat => 
-            mat.subject.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            mat.type.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            mat.name.toLowerCase().includes(searchTerm.toLowerCase()) 
-        );
+        const filtered = materials.filter(mat => {
+            // 1. Text Search Box Filter
+            const matchesSearch = mat.subject.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                                 mat.type.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                                 mat.name.toLowerCase().includes(searchTerm.toLowerCase());
+
+            // 2. Dropdown Subject Filter
+            const matchesSubject = filterSubject ? mat.subject === filterSubject : true;
+            
+            
+            // 4. Dropdown Delivery Type (Online vs Physical) Filter
+            const matchesType = filterType ? mat.type?.toLowerCase() === filterType.toLowerCase() : true;
+            
+            // 5. Dropdown Location / District Filter
+
+            return matchesSearch && matchesSubject && matchesType 
+        });
+
 
         // Grouping implementation
         return filtered.reduce((acc, mat) => {
@@ -52,7 +74,7 @@ const MaterialsPage = () => {
             acc[subject].push(mat);
             return acc;
         }, {});
-    }, [materials, searchTerm]);
+    }, [materials, searchTerm, filterSubject, filterType]);
 
     
 
@@ -80,6 +102,40 @@ const MaterialsPage = () => {
                     </div>
                 </div>
             </div>
+
+            <div className="bg-white border border-slate-200 rounded-2xl p-4 grid grid-cols-2 md:grid-cols-4 gap-4 mb-6 shadow-sm">
+                    {/* Subject Select */}
+                    <div className="space-y-1">
+                        <label className="text-[10px] font-bold uppercase text-slate-400 tracking-wider">Subject</label>
+                        <select 
+                            value={filterSubject}
+                            onChange={(e) => setFilterSubject(e.target.value)}
+                            className="w-full text-xs font-semibold text-slate-600 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 focus:border-blue-600 outline-none transition-all"
+                        >
+                            <option value="">All Subjects</option>
+                            {uniqueSubjects.map(sub => (
+                                <option key={sub} value={sub}>{sub}</option>
+                            ))}
+                        </select>
+                    </div>
+
+                    
+
+                    {/* Mode Type Select */}
+                    <div className="space-y-1">
+                        <label className="text-[10px] font-bold uppercase text-slate-400 tracking-wider">Class Type</label>
+                        <select 
+                            value={filterType}
+                            onChange={(e) => setFilterType(e.target.value)}
+                            className="w-full text-xs font-semibold text-slate-600 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 focus:border-blue-600 outline-none transition-all"
+                        >
+                            <option value="">All Types</option>
+                            {uniqueTypes.map(type => (
+                                <option key={type} value={type}>{type}</option>
+                            ))}
+                        </select>
+                    </div>
+                </div>
 
             {/* Categorized Classes */}
             <div className="max-w-7xl mx-auto space-y-12">
