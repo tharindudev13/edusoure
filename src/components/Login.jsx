@@ -1,4 +1,4 @@
-import { Mail, Lock, LogIn } from 'lucide-react';
+import { Mail, Lock, LogIn, EyeOff, Eye } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router';
@@ -9,6 +9,7 @@ const LoginPage = () => {
 
     const[email,setEmail] = useState('')
     const[password,setPassword] = useState('')
+    const[showPass,setShowPass] = useState(false)
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -41,7 +42,7 @@ const LoginPage = () => {
             <label className="block text-sm font-semibold text-slate-700 mb-2">Email Address</label>
             <div className="relative">
               <Mail className="absolute left-3 top-3 w-5 h-5 text-slate-400" />
-              <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 focus:ring-4 focus:ring-blue-100 focus:border-blue-500 outline-none transition-all" placeholder="name@university.com" />
+              <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 focus:ring-4 focus:ring-blue-100 focus:border-blue-500 outline-none transition-all" placeholder="user@gmail.com" />
             </div>
           </div>
 
@@ -49,7 +50,11 @@ const LoginPage = () => {
             <label className="block text-sm font-semibold text-slate-700 mb-2">Password</label>
             <div className="relative">
               <Lock className="absolute left-3 top-3 w-5 h-5 text-slate-400" />
-              <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 focus:ring-4 focus:ring-blue-100 focus:border-blue-500 outline-none transition-all" placeholder="••••••••" />
+              <input type={showPass ? "text" : "password"} 
+               value={password} onChange={(e) => setPassword(e.target.value)} className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 focus:ring-4 focus:ring-blue-100 focus:border-blue-500 outline-none transition-all" placeholder="••••••••" />
+              <button type="button" onClick={() => setShowPass(!showPass)} className="cursor-pointer absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400">
+                      {showPass ? <EyeOff size={16} /> : <Eye size={16} />}
+                    </button>
             </div>
           </div>
 
