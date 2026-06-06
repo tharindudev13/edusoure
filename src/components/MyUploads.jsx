@@ -11,9 +11,7 @@ const MyUploads = () => {
 
     useEffect(() => {
         const fetchMyUploads = async () =>{
-            try{
-                console.log(user.name);
-                
+            try{                
                 const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/v1/material/uploads/${user?.id}`, {
                     headers: {
                         "Authorization": `Bearer ${token}`

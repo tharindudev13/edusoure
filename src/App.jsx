@@ -16,6 +16,7 @@ import AboutUs from "./pages/AboutUs";
 import PrivacyPolicy from "./pages/Privacy";
 import SettingsPage from "./pages/Settings";
 import ForgotPassword from "./pages/ForgotPassword";
+import DashboardLayout from "./components/Role";
 
 function App() {
 
@@ -40,6 +41,8 @@ function App() {
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
+      <Route path="/test" element={<DashboardLayout />} />
+
       </>
     )
   )

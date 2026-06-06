@@ -21,6 +21,7 @@ export default function SettingsPage() {
   const [activeTab, setActiveTab] = useState("account");
 
   const isTeacher = user?.roles?.includes("ROLE_TEACHER");
+  const isGoogleUser = !user?.profilePic.startsWith("https://firebasestorage");
   
 
   return (
@@ -34,7 +35,7 @@ export default function SettingsPage() {
           </div>
           {[
             { id: "account", label: "Edit Profile", icon: <User size={16} /> },
-            { id: "security", label: "Change Password", icon: <ShieldCheck size={16} /> },
+            (!isGoogleUser && { id: "security", label: "Change Password", icon: <ShieldCheck size={16} /> }),
             // { id: "notifications", label: "Notifications", icon: <Bell size={16} /> },
             ...(!isTeacher ? [{ id: "status", label: "Become a Teacher", icon: <ArrowUpCircle size={16} /> }] : []),
             { id: "danger", label: "Delete Account", icon: <Trash2 size={16} /> },
@@ -63,7 +64,7 @@ export default function SettingsPage() {
           )}
 
           {/* TAB CONTENT: SECURITY UPDATE KEYS PANEL (RECOMMENDATION) */}
-          {activeTab === "security" && (
+          {activeTab === "security" && !isGoogleUser && (
             <ChangePwd />
             )}
 
