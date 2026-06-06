@@ -57,7 +57,7 @@ const ForgotPassword = () => {
         const txt = await response.text();
         setErrorMessage(txt || "This email address is not registered with EduSource.");
       }
-    } catch (err) {
+    } catch {
       setErrorMessage("Network error. Please check your connection and try again.");
     } finally {
       setIsSubmitting(false);
@@ -87,7 +87,7 @@ const ForgotPassword = () => {
       } else {
         setErrorMessage("Invalid or expired verification code. Please try again.");
       }
-    } catch (err) {
+    } catch  {
       setErrorMessage("Network error verifying code.");
     } finally {
       setIsSubmitting(false);
@@ -121,7 +121,7 @@ const ForgotPassword = () => {
       } else {
         setErrorMessage("Could not update password. Please request a new code.");
       }
-    } catch (err) {
+    } catch  {
       setErrorMessage("Network error updating password.");
     } finally {
       setIsSubmitting(false);

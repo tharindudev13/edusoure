@@ -30,7 +30,7 @@ const RoleSelectionModal = ({ isOpen, onClose }) => {
         dispatch(updateUserRole(selectedRole)); // Instantly updates layout access permissions in Redux
         onClose();
       }
-    } catch (err) {
+    } catch  {
       window.alert("Failed to update profile role.");
     } finally {
       setLoading(false);

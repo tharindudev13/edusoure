@@ -90,15 +90,15 @@ const LoginPage = () => {
             <div className="relative flex justify-center text-xs uppercase"><span className="bg-white px-2 text-slate-400 font-mono font-bold tracking-wider">Or Continue With</span></div>
           </div>
 
-          {/* OAUTH NATIVE SYSTEM LOGIN ACCELERATOR BUTTON */}
-          <div className="flex justify-center w-full">
+          {/* --- FIXED OAUTH CONTAINER INNER WRAPPER --- */}
+          <div className="w-full flex justify-center transform scale-102 sm:scale-100 origin-center">
             <GoogleLogin
               onSuccess={handleGoogleSuccess}
               onError={() => window.alert("Google Sign-In was cancelled or failed.")}
               shape="pill"
               theme="outline"
               size="large"
-              width="384px"
+              // Removed width parameter to let Google auto-scale inside parent layout boundaries
               text="signin_with"
             />
           </div>
