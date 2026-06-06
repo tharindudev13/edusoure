@@ -15,6 +15,7 @@ import QuizPlay from "./components/QuizPlay";
 import AboutUs from "./pages/AboutUs";
 import PrivacyPolicy from "./pages/Privacy";
 import SettingsPage from "./pages/Settings";
+import ForgotPassword from "./pages/ForgotPassword";
 
 function App() {
 
@@ -38,6 +39,7 @@ function App() {
       </Route>
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
+      <Route path="/forgot-password" element={<ForgotPassword />} />
       </>
     )
   )

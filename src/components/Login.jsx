@@ -65,10 +65,18 @@ const LoginPage = () => {
         </form>
 
 
-        <p className="text-center mt-8 text-slate-600">
-          Don't have an account? <span className="text-blue-600 font-bold cursor-pointer">
+        <p className="text-center mt-8 text-sm text-slate-600">
+          Don't have an account? <span className="text-blue-600 text-sm font-bold cursor-pointer">
             <Link to={"/register"}>
                 Register here
+            </Link>
+            </span>
+        </p>
+
+        <p className="text-center mt-2 text-slate-600">
+          <span className="text-blue-600 text-sm font-bold cursor-pointer">
+            <Link to={"/forgot-password"}>
+                forgot password?
             </Link>
             </span>
         </p>
