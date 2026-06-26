@@ -47,7 +47,7 @@ const ClassDetailsPage = () => {
           
         }
         if(response.status === 403){
-            window.alert("Session expired. Please log in again.")
+            window.alert("Please login or sign up to see class details")
             localStorage.removeItem('token')
             window.location.href = '/login'
           }
@@ -122,6 +122,8 @@ const ClassDetailsPage = () => {
       <Loading messege={messege}/>
     )
   }
+
+
 
   return (
     <>
@@ -215,33 +217,58 @@ const ClassDetailsPage = () => {
 
             {/* 4. Submit Review Section */}
             {isStudent && (
-            <div className="bg-blue-600 rounded-2xl p-8 text-white shadow-xl">
-              <h4 className="text-xl font-bold mb-4">Write a Review</h4>
-              <div className="space-y-4">
-                <div className="flex items-center gap-4">
-                  <span className="text-sm font-medium">Your Rating:</span>
-                  <div className="flex gap-1">
-                    {[1, 2, 3, 4, 5].map((s) => (
-                      <button key={s} onClick={() => setRating(s)}>
-                        <Star className={`w-6 h-6 ${s <= rating ? 'fill-yellow-400 text-yellow-400' : 'text-blue-300'}`} />
-                      </button>
-                    ))}
-                  </div>
-                </div>
-                <textarea 
-                  className="w-full p-4 rounded-xl text-slate-900 focus:ring-4 focus:ring-blue-400 outline-none transition-all"
-                  placeholder="Share your experience with this class..."
-                  rows="3"
-                  value={reviewText}
-                  onChange={(e) => setReviewText(e.target.value)}
-                />
-                <button onClick={submitReview} className="cursor-pointer flex items-center justify-center gap-2 w-full md:w-auto px-8 py-3 bg-white text-blue-600 font-bold rounded-xl hover:bg-slate-100 transition-colors">
-                  <Send className="w-4 h-4" />
-                  Submit Review
-                </button>
-              </div>
-            </div>
-            )}
+  <div className="bg-white border border-slate-100 rounded-2xl p-6 shadow-sm max-w-2xl w-full">
+    {/* Heading */}
+    <h4 className="text-lg font-bold text-slate-800 mb-5">Write a Review</h4>
+    
+    <div className="space-y-5">
+      {/* Interactive Rating Row */}
+      <div className="flex items-center gap-3">
+        <span className="text-sm font-semibold text-slate-600">Your Rating</span>
+        <div className="flex gap-1 bg-slate-50 px-2 py-1.5 rounded-xl border border-slate-100">
+          {[1, 2, 3, 4, 5].map((s) => (
+            <button 
+              key={s} 
+              type="button"
+              onClick={() => setRating(s)}
+              className="cursor-pointer transition-transform duration-100 active:scale-90"
+            >
+              <Star 
+                className={`w-5 h-5 transition-colors duration-150 ${
+                  s <= rating 
+                    ? 'fill-amber-400 text-amber-400' 
+                    : 'text-slate-300 hover:text-slate-400'
+                }`} 
+              />
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Styled Feedback Input Block */}
+      <div className="relative">
+        <textarea 
+          className="w-full p-4 rounded-xl bg-slate-50 text-slate-800 border border-slate-200 placeholder-slate-400 focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 outline-none transition-all resize-none text-sm leading-relaxed"
+          placeholder="Share your experience with this class..."
+          rows="4"
+          value={reviewText}
+          onChange={(e) => setReviewText(e.target.value)}
+        />
+      </div>
+
+      {/* Action Button Layout Alignment */}
+      <div className="flex justify-end">
+        <button 
+          onClick={submitReview} 
+          className="cursor-pointer flex items-center justify-center gap-2 w-full sm:w-auto px-6 py-2.5 bg-blue-600 text-white font-semibold rounded-xl text-sm hover:bg-blue-700 active:scale-[0.98] transition-all shadow-md shadow-blue-600/10"
+        >
+          <Send className="w-4 h-4" />
+          Submit Review
+        </button>
+      </div>
+    </div>
+  </div>
+)}
           </section>
         </div>
 
@@ -250,7 +277,7 @@ const ClassDetailsPage = () => {
           <div className="bg-white p-6 rounded-2xl border border-slate-200 sticky top-6">
             <h4 className="font-bold text-slate-800 mb-4">Class Details</h4>
             <div className="space-y-4">
-              <div className="flex justify-between items-start text-sm gap-17.5">
+              <div className="flex justify-between items-start text-sm">
                 <span className="text-slate-500">Subject</span>
                 <span className="font-semibold text-slate-800">{details.subject}</span>
               </div>
@@ -272,12 +299,25 @@ const ClassDetailsPage = () => {
                   </Link>
                 </div>
               )}
-              
-              
             </div>
-            <button onClick={() => window.open(`https://wa.me/${details.hotline}`, '_blank')} className="cursor-pointer w-full mt-6 py-4 bg-blue-600 text-white font-bold rounded-xl shadow-lg hover:bg-blue-700 transition-all">
-              Contact Us
-            </button>
+
+            {/* 🌟 UPDATED BUTTON LAYOUT: Purely changing the button positioning to side-by-side on the same line */}
+            <div className="grid grid-cols-2 gap-3 mt-6">
+              <button 
+                onClick={() => window.open(`https://wa.me/${details.hotline}`, '_blank')} 
+                className="cursor-pointer w-full py-2 bg-blue-600 text-white font-bold rounded-xl shadow-lg hover:bg-blue-700 transition-all flex items-center justify-center"
+              >
+                Contact
+              </button>
+
+              <button 
+                onClick={() => window.open(`https://${details.lms}`, '_blank')} 
+                className="cursor-pointer w-full py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl border border-slate-200 transition-all flex items-center justify-center"
+              >
+                LMS
+              </button>
+            </div>
+
           </div>
         </div>
 

@@ -112,7 +112,7 @@ const ProfilePage = () => {
             <div className="space-y-3">
               {/* <InfoItem icon={<CreditCard size={16}/>} label="NIC" value={profileData.nic} /> */}
               <InfoItem icon={<Phone size={16}/>} label="Phone" value={profileData.phone} />
-              <InfoItem icon={<MapPin size={16}/>} label="Address" value={profileData.address} />
+              <InfoItem icon={<MapPin size={16}/>} label="Hometown" value={profileData.address} />
               {isTeacher ? 
                 <InfoItem icon={<Video size={16}/>} label="Mode" value={profileData.mode} />
                :

@@ -1,5 +1,5 @@
 import {  Link } from 'react-router';
-import { LogIn, Lock } from 'lucide-react';
+import { LogIn, GraduationCapIcon } from 'lucide-react';
 
 const GoToLogin = () => {
    
@@ -9,16 +9,16 @@ const GoToLogin = () => {
             <div className="bg-white p-10 rounded-3xl shadow-sm border border-slate-200 max-w-md w-full">
                 <div className="flex justify-center mb-6">
                     <div className="p-4 bg-slate-50 rounded-full">
-                        <Lock />
+                        <GraduationCapIcon />
                     </div>
                 </div>
 
                 <h1 className="text-2xl font-black text-slate-800 mb-2">
-                    Session Expired !
+                    Welcome to EduSource !
                 </h1>
 
                 <p className="text-slate-500 mb-8 leading-relaxed">
-                    You are not logged in or your session has expired. Please log in to continue accessing the content...
+                    Login or sign up to access resources, connect with educators, and enhance your learning experience. Your journey to knowledge starts here!
                 </p>
 
                 <div className="flex flex-col gap-3">
@@ -31,12 +31,7 @@ const GoToLogin = () => {
                 </div>
             </div>
 
-            {/* Keep technical details hidden for users, but visible for you in console
-            {process.env.NODE_ENV === 'development' && (
-                <p className="mt-4 text-xs text-slate-300">
-                    Debug: {error?.message || "No message available"}
-                </p>
-            )} */}
+            
         </div>
     );
 };

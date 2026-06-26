@@ -1,13 +1,11 @@
 import { Outlet } from "react-router"
 import NavBar from "../components/Navbar"
-import GoToLogin from "../pages/GoToLogin"
 import { useEffect, useState } from "react"
 import RoleSelectionModal from "../pages/RoleSelection"
 import { useSelector } from "react-redux"
 
 const RootLayout = () => {
 
-    const token = localStorage.getItem('token')
 
     useEffect(() => {{
       setTimeout(() => {
@@ -24,15 +22,10 @@ const RootLayout = () => {
 
     const handleCloseModal = () => {
         setHasDismissedModal(true);
-        sessionStorage.setItem("role_prompted", "true"); // Ensures it won't pop up again while surfing pages
+        sessionStorage.setItem("role_prompted", "true");
     };
 
-    if(!token){
-        return(
-            <GoToLogin />
-        )
-    }   
-
+   
     return(
         <>
         <NavBar/>

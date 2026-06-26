@@ -222,10 +222,10 @@ const NavBar = () => {
           handleLogout();
           setActive(false);
         }}
-        type="warning"
-        heading="Are you sure you want to logout?"
-        messege=""
-        button_text="Confirm Logout"
+        type="logout"
+        heading="See you soon!"
+        messege="Are you sure you want to log out of EduSource? Have a great day ahead!."
+        button_text="Yes, Logout"
         onCancel={() => setActive(false)}
       />
     </>

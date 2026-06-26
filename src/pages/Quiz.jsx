@@ -4,6 +4,7 @@ import { useNavigate } from "react-router";
 import { ChartNoAxesGanttIcon, Globe} from "lucide-react";
 import { useSelector } from "react-redux";
 import SuccessModal from "../components/FeedBack";
+import GoToLogin from "./GoToLogin";
 
 export default function QuizDashboard() {
   const [selectedSubject, setSelectedSubject] = useState(null);
@@ -19,9 +20,7 @@ export default function QuizDashboard() {
 
   useEffect(() => {
     document.title = "EduSource Quiz Portal";
-    if (!token) {
-      navigate("/login");
-    }
+    
   }, [token]);
 
   const subjects = [
@@ -97,6 +96,12 @@ export default function QuizDashboard() {
                 type={'error'}
     />
         )
+    }
+
+    if(!token){
+      return(
+        <GoToLogin />
+      )
     }
 
   return (

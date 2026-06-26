@@ -227,18 +227,46 @@ const RegisterPage = () => {
                     onChange={(e) => setSchool(e.target.value)}
                   />
                 )}
+                <div className="relative flex items-center w-full max-w-sm">
+                    <div className="absolute left-4 flex items-center gap-1.5 select-none pointer-events-none text-slate-400 font-semibold text-sm">
+                      <span>+94</span>
+                      <div className="w-px h-4 bg-slate-200 ml-1" /> 
+                    </div>
+
+                    <input 
+                      required
+                      type="tel" 
+                      placeholder="7X XXX XXXX" 
+                      className="w-full p-3 pl-20 rounded-xl border border-slate-200 outline-none focus:border-blue-500 text-sm font-medium text-slate-800 transition-colors" 
+                      value={phone ? phone.replace(/^\+94/, '') : ''} 
+                      onChange={(e) => {
+                        let rawInput = e.target.value.replace(/\s+/g, ''); 
+
+                        if (!rawInput) {
+                          setPhone('');
+                          return;
+                        }
+
+                        if (rawInput.startsWith('+94')) {
+                          rawInput = rawInput.substring(3);
+                        } else if (rawInput.startsWith('94')) {
+                          rawInput = rawInput.substring(2);
+                        }
+
+                        if (rawInput.startsWith('0')) {
+                          rawInput = rawInput.replace(/^0+/, '');
+                        }
+
+                        const cleanDigits = rawInput.replace(/\D/g, '');
+
+                        setPhone(`+94${cleanDigits}`);
+                      }}
+                    />
+                  </div>
                 <input 
                   required
                   type="text" 
-                  placeholder="Phone Number" 
-                  className="p-3 rounded-xl border border-slate-200 outline-none focus:border-blue-500" 
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                />
-                <input 
-                  required
-                  type="text" 
-                  placeholder="Address" 
+                  placeholder="Hometown" 
                   className="p-3 rounded-xl border border-slate-200 outline-none focus:border-blue-500" 
                   value={address}
                   onChange={(e) => setAddress(e.target.value)}

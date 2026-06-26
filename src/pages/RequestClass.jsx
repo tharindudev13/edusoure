@@ -37,7 +37,7 @@ const RequestClassForm = () => {
     const isTeacher = user?.roles?.includes("ROLE_TEACHER");
     const navigate = useNavigate()
 
-    const districts = ["Colombo","Gampaha","Kalutara","Kandy","Matale","Nuwara Eliya","Galle","Matara","Hambantota","Jaffna","Kilinochchi","Mannar","Vavuniya","Mullaitivu","Batticaloa","Ampara","Trincomalee","Kurunegala","Puttalam","Anuradhapura","Polonnaruwa","Badulla","Monaragala","Ratnapura","Kegalle"]
+    const districts = ["+ Select District","Colombo","Gampaha","Kalutara","Kandy","Matale","Nuwara Eliya","Galle","Matara","Hambantota","Jaffna","Kilinochchi","Mannar","Vavuniya","Mullaitivu","Batticaloa","Ampara","Trincomalee","Kurunegala","Puttalam","Anuradhapura","Polonnaruwa","Badulla","Monaragala","Ratnapura","Kegalle"]
 
   
     useEffect(() => {{
@@ -199,7 +199,43 @@ const RequestClassForm = () => {
                 </div>
                 <div>
                   <label className="text-xs font-bold text-slate-400 uppercase ml-1">Hotline (WhatsApp)</label>
-                  <input  required type="text" value={hotline} onChange={(e) =>setHotline(e.target.value)} placeholder="e.g. +94789101112" className="w-full mt-1 p-3 bg-slate-50 border-none rounded-xl text-sm focus:ring-2 focus:ring-blue-500 outline-none" />
+                  <div className="relative flex items-center w-full mt-1">
+                      <div className="absolute left-4 flex items-center gap-1.5 select-none pointer-events-none text-slate-400 font-semibold text-sm">
+                      <span>+94</span>
+                      <div className="w-px h-4 bg-slate-200 ml-1" /> 
+                    </div>
+
+                      
+                      <input 
+                        required 
+                        type="tel" 
+                        placeholder="7X XXX XXXX" 
+                        className="w-full p-3 pl-14 bg-slate-50 border-none rounded-xl text-sm focus:ring-2 focus:ring-blue-500 outline-none font-medium text-slate-800 transition-all" 
+                        value={hotline ? hotline.replace(/^\+94/, '') : ''} 
+                        onChange={(e) => {
+                          let rawInput = e.target.value.replace(/\s+/g, ''); 
+
+                          if (!rawInput) {
+                            setHotline('');
+                            return;
+                          }
+
+                          if (rawInput.startsWith('+94')) {
+                            rawInput = rawInput.substring(3);
+                          } else if (rawInput.startsWith('94')) {
+                            rawInput = rawInput.substring(2);
+                          }
+
+                          if (rawInput.startsWith('0')) {
+                            rawInput = rawInput.replace(/^0+/, '');
+                          }
+
+                          const cleanDigits = rawInput.replace(/\D/g, '');
+
+                          setHotline(`+94${cleanDigits}`);
+                        }} 
+                      />
+                    </div>
                 </div>
               </div>
 
