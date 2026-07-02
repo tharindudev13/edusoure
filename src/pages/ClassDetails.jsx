@@ -3,7 +3,7 @@ import { Star, MessageCircle, Send, ImageIcon } from 'lucide-react';
 import Review from '../components/Review';
 import Loading from '../components/Loading';
 import { useSelector } from 'react-redux';
-import { useParams,Link} from 'react-router';
+import { useParams} from 'react-router';
 import Teacher from '../components/Teacher';
 import SuccessModal from '../components/FeedBack';
 
@@ -289,14 +289,6 @@ const ClassDetailsPage = () => {
                 <div className="flex justify-between text-sm">
                   <span className="text-slate-500">Duration</span>
                   <span className="font-semibold text-slate-800">{details.duration}</span>
-                </div>
-              )}
-              {details.lms && (
-                <div className="flex justify-between text-sm">
-                  <span className="text-slate-500">LMS</span>
-                  <Link to={`https://${details.lms}`} className="font-semibold text-slate-800  hover:text-blue-600 transition-colors" target="_blank" rel="noopener noreferrer">
-                    {details.lms}
-                  </Link>
                 </div>
               )}
             </div>

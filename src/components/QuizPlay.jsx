@@ -89,8 +89,8 @@ export default function QuizPlay() {
     const strokeDashoffset = circumference - (percentage / 100) * circumference;
 
     let colorClass = "text-rose-500";
-    if (correctCount >= 5 && correctCount <= 10) colorClass = "text-amber-500";
-    if (correctCount > 10) colorClass = "text-emerald-500";
+    if (percentage >= 50 && percentage < 75) colorClass = "text-amber-500";
+    if (percentage === 75) colorClass = "text-emerald-500";
 
     
 
@@ -117,7 +117,7 @@ export default function QuizPlay() {
           </div>
 
           <p className="text-slate-700 font-medium mb-6 text-sm">
-            {correctCount > 10 ? "Excellent work, Scholar!" : correctCount >= 5 ? "Good effort, keep practicing!" : "Don't give up, try again!"}
+            {percentage >= 75 ? "Excellent work, Champ!" : percentage >= 50 ? "Good effort, keep practicing!" : "Don't give up, try again!"}
           </p>
           
           <button onClick={() => navigate('/quizes')} className=" cursor-pointer w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition shadow-sm">
