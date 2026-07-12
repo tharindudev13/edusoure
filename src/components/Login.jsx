@@ -58,7 +58,7 @@ const LoginPage = () => {
 
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
-              {error && <Alert message={error === "Login Failed" ? "Invalid Credentials....!" : error}/>}
+              {error && <Alert message={error.status === 403 ? "Invalid Credentials....!" : error.message}/>}
               <label className="block text-sm font-semibold text-slate-700 mb-2">Email Address</label>
               <div className="relative">
                 <Mail className="absolute left-3 top-3 w-5 h-5 text-slate-400" />
