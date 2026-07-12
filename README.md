@@ -20,7 +20,7 @@ Instead of navigating scattered social media groups and unverified file drives, 
 EduSource is built using a decoupled full-stack architecture optimized for fast page loads, highly interactive UI flows, and enterprise-grade security.
 
 * **Frontend:** Built with **React.js (.jsx)** powered by Vite for a lightning-fast, reactive component architecture. UI styling is managed via **Tailwind CSS** to maintain a clean, fully responsive light-mode interface across mobile devices and desktops.
-* **Backend:** Driven by a **Spring Boot (Java)** REST API layer that handles business logic, database transaction security, and secure route filtering using tokenized headers (`Authorization: Bearer <token>`).
+* **Backend:** Driven by a **Spring Boot (Java)** REST API layer that handles business logic, database transaction security, and secure route filtering using tokenized headers.
 * **Database:** Powered by a document-oriented NoSQL **MongoDB** cluster, allowing fluid storage of deeply nested content matrices (such as diverse question configurations and polymorphic study materials).
 
 ---
